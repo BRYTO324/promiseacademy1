@@ -8,7 +8,3 @@ desktop.ini
 .idea/
 *.swp
 *.swo
-
-# Old files (keep only organized structure)
-script.js
-style.css
