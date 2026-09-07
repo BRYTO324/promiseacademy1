@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings — Promise Academy</title>
+  <link rel="icon" type="image/jpeg" href="../assets/logo/logo1.jpg"/>
+  <link rel="stylesheet" href="../css/style.css"/><link rel="stylesheet" href="../css/dashboard.css"/><link rel="stylesheet" href="../css/responsive.css"/>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a href="../dashboard.html" class="sidebar-brand"><img src="../assets/logo/logo1.jpg" alt="Logo" class="sidebar-logo"/><div class="sidebar-brand-text"><div class="sidebar-school-name">Promise Academy</div><div class="sidebar-tagline">School Management</div></div></a>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div><a href="../dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span></a>
+      <div class="sidebar-section-label">Academic</div><a href="students.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-label">Students</span></a><a href="admissions.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Admissions</span></a><a href="classes.html" class="nav-item"><span class="nav-icon">🏫</span><span class="nav-label">Classes</span></a><a href="timetable.html" class="nav-item"><span class="nav-icon">🗓</span><span class="nav-label">Timetable</span></a>
+      <div class="sidebar-section-label">People</div><a href="staff.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-label">Staff</span></a><a href="parents.html" class="nav-item"><span class="nav-icon">👨‍👩‍👧</span><span class="nav-label">Parents</span></a>
+      <div class="sidebar-section-label">Operations</div><a href="attendance.html" class="nav-item"><span class="nav-icon">📅</span><span class="nav-label">Attendance</span></a><a href="finance.html" class="nav-item"><span class="nav-icon">💰</span><span class="nav-label">Finance</span></a><a href="payroll.html" class="nav-item"><span class="nav-icon">💵</span><span class="nav-label">Payroll</span></a>
+      <div class="sidebar-section-label">Results</div><a href="examinations.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-label">Examinations</span></a><a href="results.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-label">Results</span></a><a href="report-card.html" class="nav-item"><span class="nav-icon">📄</span><span class="nav-label">Report Cards</span></a><a href="broadsheet.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Broadsheet</span></a>
+      <div class="sidebar-section-label">System</div><a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-label">Notifications</span></a><a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-label">Reports</span></a><a href="settings.html" class="nav-item active"><span class="nav-icon">⚙️</span><span class="nav-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html" class="nav-item" style="color:rgba(255,255,255,0.5)"><span class="nav-icon">🚪</span><span class="nav-label">Logout</span></a></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="main-content" id="mainContent">
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" id="sidebarToggle">☰</button>
+      <div class="topbar-search"><div class="search-bar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search…"/></div></div>
+      <div class="topbar-actions"><button class="topbar-btn" id="themeToggle">🌙</button><div class="avatar-placeholder avatar-sm" style="background:var(--primary-color);color:white;font-weight:700;">OA</div><button class="topbar-toggle" id="mobileSidebarToggle" style="display:none;">☰</button></div>
+    </header>
+    <div class="content-wrapper">
+      <div class="page-header">
+        <div class="page-header-left"><div class="breadcrumb"><a href="../dashboard.html">🏠 Dashboard</a><span class="sep">›</span><span class="current">Settings</span></div><h1 class="page-title">Settings</h1><p class="page-subtitle">Configure school information, sessions, and system preferences</p></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:240px 1fr;gap:var(--space-xl);">
+        <!-- Settings Nav -->
+        <div class="card" style="height:fit-content;padding:var(--space-sm);">
+          <div id="settingsNav">
+            <button class="nav-item active w-full" style="margin:2px 0;color:rgba(255,255,255,0.9);background:var(--primary-lighter);" onclick="showSetting('school')">🏫 School Information</button>
+            <button class="nav-item w-full" style="margin:2px 0;" onclick="showSetting('session')">📅 Academic Session</button>
+            <button class="nav-item w-full" style="margin:2px 0;" onclick="showSetting('terms')">📆 Terms</button>
+            <button class="nav-item w-full" style="margin:2px 0;" onclick="showSetting('grading')">📊 Grading System</button>
+            <button class="nav-item w-full" style="margin:2px 0;" onclick="showSetting('users')">👤 Users &amp; Roles</button>
+            <button class="nav-item w-full" style="margin:2px 0;" onclick="showSetting('profile')">🔑 My Profile</button>
+          </div>
+        </div>
+
+        <!-- Settings Content -->
+        <div id="settingsContent">
+          <!-- School Info (default) -->
+          <div id="setting-school" class="card">
+            <div class="card-header"><span class="card-title">🏫 School Information</span><button class="btn btn-primary btn-sm" onclick="saveSchoolInfo()">Save Changes</button></div>
+            <div class="card-body">
+              <div style="display:flex;align-items:center;gap:var(--space-xl);margin-bottom:var(--space-xl);padding:var(--space-lg);background:var(--surface-alt);border-radius:var(--radius-lg);">
+                <img src="../assets/logo/logo1.jpg" id="settingsLogoPreview" style="width:80px;height:80px;object-fit:contain;background:white;padding:6px;border-radius:var(--radius-md);border:2px solid var(--border-color);" />
+                <div>
+                  <div style="font-weight:600;margin-bottom:4px;">School Logo</div>
+                  <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Currently using: logo1.jpg</div>
+                  <label class="btn btn-outline btn-sm" style="cursor:pointer;">Upload New Logo<input type="file" accept="image/*" style="display:none;" /></label>
+                </div>
+              </div>
+              <div class="form-row cols-2">
+                <div class="form-group"><label class="form-label">School Name</label><input class="form-control" id="sSchoolName" value="Promise Academy"/></div>
+                <div class="form-group"><label class="form-label">Motto</label><input class="form-control" id="sMotto" value="Excellence in Learning, Service in Character"/></div>
+                <div class="form-group"><label class="form-label">Address</label><input class="form-control" id="sAddress" value="15 Education Avenue, Lekki Phase 1, Lagos State"/></div>
+                <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="sPhone" value="+234 (0) 802 345 6789"/></div>
+                <div class="form-group"><label class="form-label">Email</label><input class="form-control" id="sEmail" value="info@promiseacademy.edu.ng"/></div>
+                <div class="form-group"><label class="form-label">Website</label><input class="form-control" id="sWebsite" value="www.promiseacademy.edu.ng"/></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="setting-session" class="card" style="display:none;">
+            <div class="card-header"><span class="card-title">📅 Academic Session</span></div>
+            <div class="card-body">
+              <div class="form-row cols-2">
+                <div class="form-group"><label class="form-label">Current Session</label><input class="form-control" value="2024/2025"/></div>
+                <div class="form-group"><label class="form-label">Current Term</label><select class="form-control"><option>First Term</option><option selected>Second Term</option><option>Third Term</option></select></div>
+                <div class="form-group"><label class="form-label">Session Start Date</label><input class="form-control" type="date" value="2024-09-09"/></div>
+                <div class="form-group"><label class="form-label">Session End Date</label><input class="form-control" type="date" value="2025-07-25"/></div>
+              </div>
+              <button class="btn btn-primary" onclick="showToast('Saved','Session settings saved.','success')">Save</button>
+            </div>
+          </div>
+
+          <div id="setting-terms" class="card" style="display:none;">
+            <div class="card-header"><span class="card-title">📆 Term Configuration</span></div>
+            <div class="card-body">
+              <table class="table"><thead><tr><th>Term</th><th>Start Date</th><th>End Date</th><th>Status</th></tr></thead><tbody>
+                <tr><td>First Term</td><td><input type="date" class="form-control" value="2024-09-09" style="padding:6px;"/></td><td><input type="date" class="form-control" value="2024-12-13" style="padding:6px;"/></td><td><span class="badge badge-gray">Completed</span></td></tr>
+                <tr><td>Second Term</td><td><input type="date" class="form-control" value="2025-01-13" style="padding:6px;"/></td><td><input type="date" class="form-control" value="2025-04-04" style="padding:6px;"/></td><td><span class="badge badge-success badge-dot">Active</span></td></tr>
+                <tr><td>Third Term</td><td><input type="date" class="form-control" value="2025-04-28" style="padding:6px;"/></td><td><input type="date" class="form-control" value="2025-07-25" style="padding:6px;"/></td><td><span class="badge badge-warning">Upcoming</span></td></tr>
+              </tbody></table>
+              <button class="btn btn-primary" style="margin-top:16px;" onclick="showToast('Saved','Term dates saved.','success')">Save Dates</button>
+            </div>
+          </div>
+
+          <div id="setting-grading" class="card" style="display:none;">
+            <div class="card-header"><span class="card-title">📊 Grading System</span></div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-xl);">
+                <div><h4 style="margin-bottom:var(--space-md);">Primary / Nursery</h4><table class="table" style="font-size:13px;"><thead><tr><th>Grade</th><th>Min</th><th>Max</th><th>Remark</th></tr></thead><tbody>
+                  ${PA_DATA.gradingSystem.primary.map(g=>`<tr><td><strong>${g.grade}</strong></td><td>${g.min}</td><td>${g.max}</td><td>${g.remark}</td></tr>`).join('')}
+                </tbody></table></div>
+                <div><h4 style="margin-bottom:var(--space-md);">Secondary (WAEC)</h4><table class="table" style="font-size:13px;"><thead><tr><th>Grade</th><th>Min</th><th>Max</th><th>Remark</th></tr></thead><tbody>
+                  ${PA_DATA.gradingSystem.secondary.map(g=>`<tr><td><strong>${g.grade}</strong></td><td>${g.min}</td><td>${g.max}</td><td>${g.remark}</td></tr>`).join('')}
+                </tbody></table></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="setting-users" class="card" style="display:none;">
+            <div class="card-header"><span class="card-title">👤 Users &amp; Roles</span><button class="btn btn-primary btn-sm">+ Add User</button></div>
+            <div class="card-body">
+              <table class="table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead><tbody>
+                <tr><td>Mr. Olawale Adediran</td><td>principal@promiseacademy.edu.ng</td><td><span class="badge badge-primary">Administrator</span></td><td><span class="badge badge-success badge-dot">Active</span></td></tr>
+                <tr><td>Mrs. Chidinma Eze</td><td>accounts@promiseacademy.edu.ng</td><td><span class="badge badge-secondary">Accountant</span></td><td><span class="badge badge-success badge-dot">Active</span></td></tr>
+                <tr><td>Mr. Chukwuemeka Obieze</td><td>emeka.obieze@promiseacademy.edu.ng</td><td><span class="badge badge-info">Teacher</span></td><td><span class="badge badge-success badge-dot">Active</span></td></tr>
+              </tbody></table>
+            </div>
+          </div>
+
+          <div id="setting-profile" class="card" style="display:none;">
+            <div class="card-header"><span class="card-title">🔑 My Profile</span><button class="btn btn-primary btn-sm" onclick="showToast('Saved','Profile updated.','success')">Save</button></div>
+            <div class="card-body">
+              <div class="form-row cols-2">
+                <div class="form-group"><label class="form-label">Full Name</label><input class="form-control" value="Mr. Olawale Adediran"/></div>
+                <div class="form-group"><label class="form-label">Email</label><input class="form-control" type="email" value="principal@promiseacademy.edu.ng"/></div>
+                <div class="form-group"><label class="form-label">Phone</label><input class="form-control" value="+234 801 234 5678"/></div>
+                <div class="form-group"><label class="form-label">Role</label><input class="form-control" value="School Administrator" readonly/></div>
+                <div class="form-group"><label class="form-label">New Password</label><input class="form-control" type="password" placeholder="Leave blank to keep current"/></div>
+                <div class="form-group"><label class="form-label">Confirm Password</label><input class="form-control" type="password" placeholder="Confirm new password"/></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+<script src="../js/data.js"></script><script src="../js/app.js"></script>
+<script>
+  function checkMobile(){const mb=document.getElementById('mobileSidebarToggle');if(mb)mb.style.display=window.innerWidth<=1023?'flex':'none';}
+  window.addEventListener('resize',checkMobile);checkMobile();
+
+  function showSetting(id){
+    document.querySelectorAll('[id^="setting-"]').forEach(el=>el.style.display='none');
+    const target=document.getElementById('setting-'+id);
+    if(target) target.style.display='block';
+    document.querySelectorAll('#settingsNav button').forEach(btn=>{
+      btn.className='nav-item w-full';btn.style.background='';btn.style.color='rgba(255,255,255,0.65)';
+    });
+    event.target.className='nav-item w-full active';event.target.style.background='var(--primary-lighter)';event.target.style.color='rgba(255,255,255,0.9)';
+  }
+
+  window.saveSchoolInfo=function(){showToast('Saved','School information updated successfully.','success');};
+</script>
+</body>
+</html>

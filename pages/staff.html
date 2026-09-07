@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff — Promise Academy</title>
+  <link rel="icon" type="image/jpeg" href="../assets/logo/logo1.jpg" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a href="../dashboard.html" class="sidebar-brand"><img src="../assets/logo/logo1.jpg" alt="Logo" class="sidebar-logo"/><div class="sidebar-brand-text"><div class="sidebar-school-name">Promise Academy</div><div class="sidebar-tagline">School Management</div></div></a>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div><a href="../dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span></a>
+      <div class="sidebar-section-label">Academic</div><a href="students.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-label">Students</span></a><a href="admissions.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Admissions</span></a><a href="classes.html" class="nav-item"><span class="nav-icon">🏫</span><span class="nav-label">Classes &amp; Sections</span></a><a href="timetable.html" class="nav-item"><span class="nav-icon">🗓</span><span class="nav-label">Timetable</span></a>
+      <div class="sidebar-section-label">People</div><a href="staff.html" class="nav-item active"><span class="nav-icon">👥</span><span class="nav-label">Teachers &amp; Staff</span></a><a href="parents.html" class="nav-item"><span class="nav-icon">👨‍👩‍👧</span><span class="nav-label">Parents</span></a>
+      <div class="sidebar-section-label">Operations</div><a href="attendance.html" class="nav-item"><span class="nav-icon">📅</span><span class="nav-label">Attendance</span></a><a href="finance.html" class="nav-item"><span class="nav-icon">💰</span><span class="nav-label">Fees &amp; Finance</span></a><a href="payroll.html" class="nav-item"><span class="nav-icon">💵</span><span class="nav-label">Payroll</span></a>
+      <div class="sidebar-section-label">Results</div><a href="examinations.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-label">Examinations</span></a><a href="results.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-label">Results</span></a><a href="report-card.html" class="nav-item"><span class="nav-icon">📄</span><span class="nav-label">Report Cards</span></a><a href="broadsheet.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Broadsheet</span></a>
+      <div class="sidebar-section-label">System</div><a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-label">Notifications</span><span class="nav-badge">3</span></a><a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-label">Reports</span></a><a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span class="nav-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html" class="nav-item" style="color:rgba(255,255,255,0.5)"><span class="nav-icon">🚪</span><span class="nav-label">Logout</span></a></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="main-content" id="mainContent">
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" id="sidebarToggle">☰</button>
+      <div class="topbar-search"><div class="search-bar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="globalSearch" placeholder="Search…"/></div></div>
+      <div class="topbar-actions"><div class="role-badge"><span>🏫</span><span class="role-badge-text">Administrator</span></div><button class="topbar-btn" id="themeToggle">🌙</button><div class="avatar-placeholder avatar-sm" style="background:var(--primary-color);color:white;font-weight:700;">OA</div><button class="topbar-toggle" id="mobileSidebarToggle" style="display:none;">☰</button></div>
+    </header>
+    <div class="content-wrapper">
+      <div class="page-header">
+        <div class="page-header-left"><div class="breadcrumb"><a href="../dashboard.html">🏠 Dashboard</a><span class="sep">›</span><span class="current">Staff</span></div><h1 class="page-title">Teachers &amp; Staff</h1><p class="page-subtitle">Manage teaching, administrative and non-teaching staff</p></div>
+        <div class="page-header-right"><button class="btn btn-primary" onclick="openModal('staffModal')">+ Add Staff</button></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:var(--space-lg);">
+        <div class="stat-card green" style="padding:var(--space-lg);"><div class="stat-icon green" style="width:40px;height:40px;">👥</div><div class="stat-content"><div class="stat-value">48</div><div class="stat-label">Total Staff</div></div></div>
+        <div class="stat-card blue" style="padding:var(--space-lg);"><div class="stat-icon blue" style="width:40px;height:40px;">👨‍🏫</div><div class="stat-content"><div class="stat-value">32</div><div class="stat-label">Teaching Staff</div></div></div>
+        <div class="stat-card gold" style="padding:var(--space-lg);"><div class="stat-icon gold" style="width:40px;height:40px;">💼</div><div class="stat-content"><div class="stat-value">10</div><div class="stat-label">Admin Staff</div></div></div>
+        <div class="stat-card orange" style="padding:var(--space-lg);"><div class="stat-icon orange" style="width:40px;height:40px;">🔧</div><div class="stat-content"><div class="stat-value">6</div><div class="stat-label">Non-Teaching</div></div></div>
+      </div>
+
+      <!-- Tabs -->
+      <div style="display:flex;gap:4px;margin-bottom:var(--space-lg);">
+        <button class="btn btn-primary btn-sm" id="tabAll" onclick="filterStaff('')">All Staff</button>
+        <button class="btn btn-outline btn-sm" id="tabTeaching" onclick="filterStaff('teaching')">Teaching</button>
+        <button class="btn btn-outline btn-sm" id="tabAdmin" onclick="filterStaff('admin')">Administrative</button>
+        <button class="btn btn-outline btn-sm" id="tabNon" onclick="filterStaff('nonteaching')">Non-Teaching</button>
+      </div>
+
+      <!-- Staff Cards Grid -->
+      <div id="staffGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-lg);"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Staff Modal -->
+<div class="modal-overlay" id="staffModal">
+  <div class="modal modal-lg">
+    <div class="modal-header"><h3 class="modal-title">Add Staff Member</h3><button class="modal-close" onclick="closeModal('staffModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row cols-2">
+        <div class="form-group"><label class="form-label">Full Name *</label><input class="form-control" type="text" id="sfName" required /></div>
+        <div class="form-group"><label class="form-label">Staff Type *</label><select class="form-control" id="sfType" required><option value="">Select</option><option value="teaching">Teaching</option><option value="admin">Administrative</option><option value="nonteaching">Non-Teaching</option></select></div>
+        <div class="form-group"><label class="form-label">Role / Position *</label><input class="form-control" type="text" id="sfRole" required placeholder="e.g. Class Teacher, Accountant" /></div>
+        <div class="form-group"><label class="form-label">Department</label><input class="form-control" type="text" id="sfDept" placeholder="e.g. Secondary, Finance" /></div>
+        <div class="form-group"><label class="form-label">Phone *</label><input class="form-control" type="tel" id="sfPhone" required /></div>
+        <div class="form-group"><label class="form-label">Email *</label><input class="form-control" type="email" id="sfEmail" required /></div>
+        <div class="form-group"><label class="form-label">Date Joined</label><input class="form-control" type="date" id="sfJoined" /></div>
+        <div class="form-group"><label class="form-label">Status</label><select class="form-control" id="sfStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('staffModal')">Cancel</button><button class="btn btn-primary" onclick="addStaff()">Add Staff</button></div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="../js/data.js"></script><script src="../js/app.js"></script>
+<script>
+  function checkMobile(){const mb=document.getElementById('mobileSidebarToggle');if(mb)mb.style.display=window.innerWidth<=1023?'flex':'none';}
+  window.addEventListener('resize',checkMobile);checkMobile();
+
+  let staffData = [...PA_DATA.staff];
+  let currentFilter = '';
+
+  const typeColors = {teaching:'var(--info-color)',admin:'var(--secondary-color)',nonteaching:'var(--text-muted)'};
+  const typeBg = {teaching:'var(--info-light)',admin:'var(--secondary-ghost)',nonteaching:'var(--surface-alt)'};
+
+  function renderStaff(list){
+    const grid = document.getElementById('staffGrid');
+    if(!list.length){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted);">No staff found</div>`;return;}
+    grid.innerHTML = list.map(s=>{
+      const initials = s.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+      return `
+      <div class="card" style="padding:var(--space-xl);">
+        <div style="display:flex;align-items:center;gap:var(--space-md);margin-bottom:var(--space-md);">
+          <div class="avatar-placeholder avatar-lg" style="background:${typeBg[s.type]||'var(--primary-ghost)'};color:${typeColors[s.type]||'var(--primary-color)'};font-size:18px;font-weight:700;">${initials}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:15px;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.name}</div>
+            <div style="font-size:12px;color:var(--text-muted);">${s.role}</div>
+            <span class="badge" style="background:${typeBg[s.type]};color:${typeColors[s.type]};margin-top:4px;font-size:10px;">${s.type.charAt(0).toUpperCase()+s.type.slice(1)}</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--text-secondary);">
+          <div style="display:flex;gap:8px;align-items:center;"><span>🏢</span><span>${s.department}</span></div>
+          <div style="display:flex;gap:8px;align-items:center;"><span>📞</span><span>${s.phone}</span></div>
+          <div style="display:flex;gap:8px;align-items:center;overflow:hidden;"><span>✉️</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.email}</span></div>
+          <div style="display:flex;gap:8px;align-items:center;"><span>📅</span><span>Joined ${formatDate(s.joined)}</span></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-md);padding-top:var(--space-md);border-top:1px solid var(--border-light);">
+          <span class="badge badge-dot ${s.status==='active'?'badge-success':'badge-danger'}">${s.status==='active'?'Active':'Inactive'}</span>
+          <div class="action-btns">
+            <button class="action-btn view" title="View">👁</button>
+            <button class="action-btn edit" title="Edit">✏️</button>
+            <button class="action-btn delete" onclick="removeStaff('${s.id}')" title="Remove">🗑</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.filterStaff = function(type){
+    currentFilter = type;
+    ['tabAll','tabTeaching','tabAdmin','tabNon'].forEach(id=>{const el=document.getElementById(id);if(el){el.className='btn btn-outline btn-sm';}});
+    const map={'':'tabAll','teaching':'tabTeaching','admin':'tabAdmin','nonteaching':'tabNon'};
+    const active=document.getElementById(map[type]);if(active)active.className='btn btn-primary btn-sm';
+    renderStaff(type?staffData.filter(s=>s.type===type):staffData);
+  };
+
+  window.addStaff = function(){
+    const name=document.getElementById('sfName').value;
+    const type=document.getElementById('sfType').value;
+    const role=document.getElementById('sfRole').value;
+    if(!name||!type||!role){showToast('Missing Fields','Please fill required fields.','error');return;}
+    const newStaff={id:'STF'+String(staffData.length+1).padStart(3,'0'),name,type,role,department:document.getElementById('sfDept').value||'General',phone:document.getElementById('sfPhone').value,email:document.getElementById('sfEmail').value,joined:document.getElementById('sfJoined').value||new Date().toISOString().split('T')[0],status:'active'};
+    staffData.push(newStaff);
+    closeModal('staffModal');
+    filterStaff(currentFilter);
+    showToast('Staff Added',`${name} has been added successfully.`,'success');
+  };
+
+  window.removeStaff = function(id){
+    confirmAction('Remove this staff member from the system?',()=>{
+      staffData=staffData.filter(s=>s.id!==id);
+      filterStaff(currentFilter);
+      showToast('Staff Removed','Staff member removed.','warning');
+    },'Remove Staff');
+  };
+
+  renderStaff(staffData);
+</script>
+</body>
+</html>

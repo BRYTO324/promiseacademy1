@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher Portal — Promise Academy</title>
+  <link rel="icon" type="image/jpeg" href="../assets/logo/logo1.jpg"/>
+  <link rel="stylesheet" href="../css/style.css"/><link rel="stylesheet" href="../css/dashboard.css"/><link rel="stylesheet" href="../css/responsive.css"/>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a href="#" class="sidebar-brand">
+      <img src="../assets/logo/logo1.jpg" alt="Logo" class="sidebar-logo"/>
+      <div class="sidebar-brand-text"><div class="sidebar-school-name">Promise Academy</div><div class="sidebar-tagline">Teacher Portal</div></div>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Overview</div>
+      <a href="#" class="nav-item active" onclick="showTeacherView('dashboard',this)"><span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span></a>
+      <div class="sidebar-section-label">Teaching</div>
+      <a href="#" class="nav-item" onclick="showTeacherView('classes',this)"><span class="nav-icon">🏫</span><span class="nav-label">My Classes</span></a>
+      <a href="#" class="nav-item" onclick="showTeacherView('students',this)"><span class="nav-icon">🎓</span><span class="nav-label">My Students</span></a>
+      <a href="#" class="nav-item" onclick="showTeacherView('attendance',this)"><span class="nav-icon">📅</span><span class="nav-label">Mark Attendance</span></a>
+      <a href="#" class="nav-item" onclick="showTeacherView('results',this)"><span class="nav-icon">📊</span><span class="nav-label">Enter Results</span></a>
+      <a href="#" class="nav-item" onclick="showTeacherView('timetable',this)"><span class="nav-icon">🗓</span><span class="nav-label">My Timetable</span></a>
+      <div class="sidebar-section-label">Communication</div>
+      <a href="#" class="nav-item" onclick="showTeacherView('announcements',this)"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html" class="nav-item" style="color:rgba(255,255,255,0.5)"><span class="nav-icon">🚪</span><span class="nav-label">Logout</span></a></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="main-content" id="mainContent">
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" id="sidebarToggle">☰</button>
+      <div style="flex:1;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:14px;font-weight:600;color:var(--text-secondary);">Teacher Portal —</span>
+        <strong id="teacherNameDisplay" style="color:var(--primary-color);">Mr. Chukwuemeka Obieze</strong>
+      </div>
+      <div class="topbar-actions">
+        <div class="role-badge"><span>👨‍🏫</span><span class="role-badge-text">Teacher</span></div>
+        <button class="topbar-btn" id="themeToggle">🌙</button>
+        <div class="avatar-placeholder avatar-sm" style="background:var(--info-color);color:white;font-weight:700;">CO</div>
+        <button class="topbar-toggle" id="mobileSidebarToggle" style="display:none;">☰</button>
+      </div>
+    </header>
+
+    <div class="content-wrapper" id="teacherContent"></div>
+  </div>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+<script src="../js/data.js"></script><script src="../js/app.js"></script>
+<script>
+  function checkMobile(){const mb=document.getElementById('mobileSidebarToggle');if(mb)mb.style.display=window.innerWidth<=1023?'flex':'none';}
+  window.addEventListener('resize',checkMobile);checkMobile();
+
+  // Demo teacher: STF003
+  const TEACHER = PA_DATA.staff.find(s=>s.id==='STF003');
+  const MY_CLASSES = TEACHER?.classes || ['jss2'];
+  const MY_SUBJECTS = TEACHER?.subjects || ['Mathematics','Further Mathematics'];
+
+  function showTeacherView(view, el){
+    document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+    if(el) el.classList.add('active');
+    const map={dashboard:renderTeacherDash,classes:renderMyClasses,students:renderMyStudents,attendance:renderMarkAttendance,results:renderEnterResults,timetable:renderTeacherTimetable,announcements:renderTeacherAnnouncements};
+    if(map[view]) map[view]();
+  }
+
+  function renderTeacherDash(){
+    const myStudents = PA_DATA.students.filter(s=>MY_CLASSES.includes(s.classId));
+    document.getElementById('teacherContent').innerHTML=`
+      <div class="page-header">
+        <div class="page-header-left"><h1 class="page-title">Welcome, ${TEACHER?.name||'Teacher'}</h1><p class="page-subtitle">Class Teacher — ${MY_CLASSES.map(c=>getClass(c)?.name||c).join(', ')} · ${PA_DATA.school.term}</p></div>
+      </div>
+
+      <div class="dashboard-welcome" style="margin-bottom:var(--space-xl);">
+        <div class="welcome-content">
+          <div class="welcome-greeting">Teacher Portal</div>
+          <h2 class="welcome-title">${TEACHER?.name||'Teacher'}</h2>
+          <p class="welcome-subtitle">${TEACHER?.role||'Class Teacher'} · ${TEACHER?.department||'Secondary'} Department</p>
+          <div class="welcome-meta">
+            <span class="welcome-meta-item">🏫 Classes: ${MY_CLASSES.map(c=>getClass(c)?.name||c).join(', ')}</span>
+            <span class="welcome-meta-item">📚 Subjects: ${MY_SUBJECTS.join(', ')}</span>
+          </div>
+        </div>
+        <div style="position:relative;z-index:1;">
+          <div class="avatar-placeholder" style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.15);color:white;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,0.3);">
+            ${TEACHER?TEACHER.name.split(' ').filter(n=>n.length>1).map(n=>n[0]).join('').slice(0,2):'TH'}
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:var(--space-xl);">
+        <div class="stat-card green" style="padding:var(--space-lg);"><div class="stat-icon green" style="width:40px;height:40px;">🎓</div><div class="stat-content"><div class="stat-value">${myStudents.length}</div><div class="stat-label">My Students</div></div></div>
+        <div class="stat-card blue" style="padding:var(--space-lg);"><div class="stat-icon blue" style="width:40px;height:40px;">🏫</div><div class="stat-content"><div class="stat-value">${MY_CLASSES.length}</div><div class="stat-label">My Classes</div></div></div>
+        <div class="stat-card gold" style="padding:var(--space-lg);"><div class="stat-icon gold" style="width:40px;height:40px;">📚</div><div class="stat-content"><div class="stat-value">${MY_SUBJECTS.length}</div><div class="stat-label">Subjects</div></div></div>
+        <div class="stat-card green" style="padding:var(--space-lg);"><div class="stat-icon green" style="width:40px;height:40px;">📅</div><div class="stat-content"><div class="stat-value">94%</div><div class="stat-label">Class Attendance</div></div></div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card" style="margin-bottom:var(--space-xl);">
+        <div class="card-header"><span class="card-title">⚡ Quick Actions</span></div>
+        <div class="card-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--space-md);">
+          <button class="btn btn-primary" onclick="showTeacherView('attendance')" style="justify-content:center;flex-direction:column;height:80px;gap:6px;"><span style="font-size:24px;">📅</span>Mark Attendance</button>
+          <button class="btn btn-outline" onclick="showTeacherView('results')" style="justify-content:center;flex-direction:column;height:80px;gap:6px;"><span style="font-size:24px;">📝</span>Enter Results</button>
+          <button class="btn btn-outline" onclick="showTeacherView('students')" style="justify-content:center;flex-direction:column;height:80px;gap:6px;"><span style="font-size:24px;">🎓</span>View Students</button>
+          <button class="btn btn-outline" onclick="showTeacherView('timetable')" style="justify-content:center;flex-direction:column;height:80px;gap:6px;"><span style="font-size:24px;">🗓</span>My Timetable</button>
+        </div>
+      </div>
+
+      <!-- Today's Timetable Preview -->
+      <div class="card">
+        <div class="card-header"><span class="card-title">📅 Today's Schedule</span></div>
+        <div class="card-body">
+          ${['7:30 AM','9:00 AM','11:00 AM','12:30 PM'].map((t,i)=>`
+            <div style="display:flex;align-items:center;gap:var(--space-md);padding:var(--space-sm) 0;border-bottom:1px solid var(--border-light);">
+              <div style="width:70px;font-size:12px;font-weight:600;color:var(--text-muted);flex-shrink:0;">${t}</div>
+              <div style="flex:1;padding:8px 12px;background:var(--primary-ghost);border-radius:var(--radius-md);border-left:3px solid var(--primary-color);">
+                <div style="font-weight:600;font-size:13px;">${MY_SUBJECTS[i%MY_SUBJECTS.length]}</div>
+                <div style="font-size:11px;color:var(--text-muted);">${MY_CLASSES.map(c=>getClass(c)?.name||c).join(' / ')}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderMyClasses(){
+    document.getElementById('teacherContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">My Classes</h1>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--space-lg);">
+        ${MY_CLASSES.map(cid=>{
+          const cls=getClass(cid);
+          const students=PA_DATA.students.filter(s=>s.classId===cid);
+          return `<div class="card" style="padding:var(--space-xl);">
+            <div style="font-size:20px;font-weight:700;margin-bottom:var(--space-sm);">${cls?cls.name:cid}</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-bottom:var(--space-lg);">${cls?getSectionName(cls.section):''} Section</div>
+            <div class="stats-grid" style="grid-template-columns:1fr 1fr 1fr;">
+              <div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:var(--primary-color);">${students.length}</div><div style="font-size:11px;color:var(--text-muted);">Students</div></div>
+              <div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:var(--success-color);">94%</div><div style="font-size:11px;color:var(--text-muted);">Attendance</div></div>
+              <div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:var(--secondary-color);">${cls?cls.arms.length:1}</div><div style="font-size:11px;color:var(--text-muted);">Arms</div></div>
+            </div>
+            <div style="display:flex;gap:var(--space-sm);margin-top:var(--space-lg);">
+              <button class="btn btn-primary btn-sm" style="flex:1;" onclick="showTeacherView('attendance')">📅 Attendance</button>
+              <button class="btn btn-outline btn-sm" style="flex:1;" onclick="showTeacherView('results')">📝 Results</button>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  function renderMyStudents(){
+    const students=PA_DATA.students.filter(s=>MY_CLASSES.includes(s.classId));
+    document.getElementById('teacherContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">My Students (${students.length})</h1>
+      <div class="card">
+        <div class="table-wrapper">
+          <table class="table">
+            <thead><tr><th>Student</th><th>Gender</th><th>Class</th><th>Attendance</th><th>Status</th></tr></thead>
+            <tbody>${students.map(s=>{
+              const initials=s.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+              const att=Math.floor(Math.random()*10)+88;
+              return `<tr>
+                <td><div class="student-cell"><div class="avatar-placeholder avatar-sm" style="background:var(--primary-ghost);color:var(--primary-color);font-size:11px;font-weight:700;">${initials}</div><div><div style="font-weight:600;">${s.name}</div><div style="font-size:11px;color:var(--text-muted);">${s.id}</div></div></div></td>
+                <td><span class="badge ${s.gender==='Male'?'badge-info':'badge-secondary'}">${s.gender}</span></td>
+                <td>${getClass(s.classId)?.name||s.classId}</td>
+                <td><div style="display:flex;align-items:center;gap:6px;"><div style="width:50px;height:6px;background:var(--border-light);border-radius:3px;"><div style="width:${att}%;height:100%;background:${att>=90?'var(--success-color)':'var(--warning-color)'};border-radius:3px;"></div></div><span style="font-size:12px;font-weight:600;">${att}%</span></div></td>
+                <td><span class="badge badge-success badge-dot">Active</span></td>
+              </tr>`;
+            }).join('')}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderMarkAttendance(){
+    const students=PA_DATA.students.filter(s=>MY_CLASSES.includes(s.classId));
+    const today=new Date().toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('teacherContent').innerHTML=`
+      <div class="page-header">
+        <div class="page-header-left"><h1 class="page-title">Mark Attendance</h1><p class="page-subtitle">${today}</p></div>
+        <div class="page-header-right"><button class="btn btn-ghost" onclick="markAllPresent()">✅ All Present</button><button class="btn btn-primary" onclick="saveAtt()">💾 Save</button></div>
+      </div>
+      <div class="card">
+        <div class="table-wrapper">
+          <table class="table">
+            <thead><tr><th>#</th><th>Student</th><th>Class</th><th style="text-align:center;">Present</th><th style="text-align:center;">Absent</th><th style="text-align:center;">Late</th></tr></thead>
+            <tbody>${students.map((s,i)=>{
+              const initials=s.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+              return `<tr id="tar-${s.id}">
+                <td style="color:var(--text-muted);font-size:12px;">${i+1}</td>
+                <td><div class="student-cell"><div class="avatar-placeholder avatar-sm" style="background:var(--primary-ghost);color:var(--primary-color);font-size:11px;font-weight:700;">${initials}</div><strong>${s.name}</strong></div></td>
+                <td style="font-size:13px;">${getClass(s.classId)?.name||s.classId}</td>
+                <td style="text-align:center;"><input type="radio" name="ta_${s.id}" value="present" checked style="accent-color:var(--success-color);width:18px;height:18px;" onchange="highlightRow('${s.id}','present')"/></td>
+                <td style="text-align:center;"><input type="radio" name="ta_${s.id}" value="absent" style="accent-color:var(--danger-color);width:18px;height:18px;" onchange="highlightRow('${s.id}','absent')"/></td>
+                <td style="text-align:center;"><input type="radio" name="ta_${s.id}" value="late" style="accent-color:var(--warning-color);width:18px;height:18px;" onchange="highlightRow('${s.id}','late')"/></td>
+              </tr>`;
+            }).join('')}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  function highlightRow(id, status){
+    const row=document.getElementById('tar-'+id);
+    if(!row) return;
+    row.style.background=status==='present'?'rgba(46,125,50,0.05)':status==='absent'?'rgba(198,40,40,0.05)':'rgba(245,124,0,0.05)';
+  }
+
+  function markAllPresent(){
+    PA_DATA.students.filter(s=>MY_CLASSES.includes(s.classId)).forEach(s=>{
+      const r=document.querySelector(`input[name="ta_${s.id}"][value="present"]`);
+      if(r) r.checked=true;
+      highlightRow(s.id,'present');
+    });
+    showToast('All Present','All students marked as present.','success');
+  }
+
+  function saveAtt(){showToast('Attendance Saved','Attendance has been recorded successfully.','success');}
+
+  function renderEnterResults(){
+    document.getElementById('teacherContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">Enter Results</h1>
+      <div class="card" style="margin-bottom:var(--space-lg);">
+        <div class="card-body" style="padding:var(--space-lg);">
+          <div style="display:flex;gap:var(--space-md);flex-wrap:wrap;">
+            <div class="form-group" style="margin:0;min-width:140px;"><label class="form-label">Class</label><select class="form-control" id="tcClass"><option value="">Select</option>${MY_CLASSES.map(c=>`<option value="${c}">${getClass(c)?.name||c}</option>`).join('')}</select></div>
+            <div class="form-group" style="margin:0;min-width:140px;"><label class="form-label">Subject</label><select class="form-control" id="tcSubject"><option value="">Select</option>${MY_SUBJECTS.map(s=>`<option>${s}</option>`).join('')}</select></div>
+            <button class="btn btn-primary" onclick="loadResultEntry()" style="align-self:flex-end;">Load Students</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="tcResultArea">
+        <div class="empty-state" style="padding:60px;"><div class="empty-state-icon">📝</div><div class="empty-state-title">Select a Class and Subject</div></div>
+      </div>
+    `;
+  }
+
+  function loadResultEntry(){
+    const classId=document.getElementById('tcClass').value;
+    const subject=document.getElementById('tcSubject').value;
+    if(!classId||!subject){showToast('Select','Please select class and subject.','warning');return;}
+    const students=PA_DATA.students.filter(s=>s.classId===classId);
+    const area=document.getElementById('tcResultArea');
+    area.innerHTML=`
+      <div class="card-header"><span class="card-title">Results — ${subject} · ${getClass(classId)?.name||classId}</span><button class="btn btn-primary btn-sm" onclick="showToast('Saved','Results saved.','success')">💾 Save</button></div>
+      <div class="table-wrapper"><table class="table"><thead><tr><th>Student</th><th style="text-align:center;">CA (30)</th><th style="text-align:center;">Exam (70)</th><th style="text-align:center;">Total</th><th style="text-align:center;">Grade</th></tr></thead><tbody>
+        ${students.map(s=>{
+          const ca=Math.floor(Math.random()*12)+16;
+          const ex=Math.floor(Math.random()*25)+45;
+          const tot=ca+ex;
+          const g=getGrade(tot,'secondary');
+          return `<tr>
+            <td><strong>${s.name}</strong></td>
+            <td style="text-align:center;"><input type="number" min="0" max="30" value="${ca}" style="width:56px;padding:4px;border:1px solid var(--border-color);border-radius:4px;text-align:center;font-size:13px;" onchange="this.closest('tr').querySelector('.tot').textContent=parseInt(this.value||0)+parseInt(this.closest('tr').querySelectorAll('input')[1].value||0)" /></td>
+            <td style="text-align:center;"><input type="number" min="0" max="70" value="${ex}" style="width:56px;padding:4px;border:1px solid var(--border-color);border-radius:4px;text-align:center;font-size:13px;" onchange="this.closest('tr').querySelector('.tot').textContent=parseInt(this.value||0)+parseInt(this.closest('tr').querySelectorAll('input')[0].value||0)" /></td>
+            <td style="text-align:center;font-weight:700;" class="tot">${tot}</td>
+            <td style="text-align:center;font-weight:700;color:var(--primary-color);">${g.grade}</td>
+          </tr>`;
+        }).join('')}
+      </tbody></table></div>`;
+  }
+
+  function renderTeacherTimetable(){
+    const days=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+    const periods=['7:30–8:15','8:15–9:00','9:00–9:45','9:45–10:30','BREAK','11:00–11:45','11:45–12:30'];
+    const colors=['#e8f5e8','#e3f2fd','#fff8e1','#fce4ec','#f3e5f5'];
+    document.getElementById('teacherContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">My Timetable</h1>
+      <div class="card">
+        <div class="table-wrapper">
+          <table class="table" style="min-width:600px;">
+            <thead><tr><th>Period</th>${days.map(d=>`<th style="text-align:center;">${d}</th>`).join('')}</tr></thead>
+            <tbody>${periods.map((p,pi)=>{
+              if(p==='BREAK') return `<tr><td style="font-size:11px;font-weight:700;color:var(--text-muted);">${p}</td><td colspan="5" style="text-align:center;font-weight:700;color:var(--warning-color);">☕ BREAK</td></tr>`;
+              return `<tr><td style="font-size:11px;font-weight:700;color:var(--text-muted);white-space:nowrap;">${p}</td>${days.map((_,di)=>{
+                const hasClass=(di*3+pi)%3===0;
+                if(!hasClass) return `<td></td>`;
+                const ci=(di+pi)%colors.length;
+                const cls=MY_CLASSES[(di+pi)%MY_CLASSES.length];
+                const subj=MY_SUBJECTS[(pi)%MY_SUBJECTS.length];
+                return `<td><div style="background:${colors[ci]};padding:6px 8px;border-radius:4px;text-align:center;font-size:12px;"><div style="font-weight:600;">${subj}</div><div style="font-size:11px;color:var(--text-muted);">${getClass(cls)?.name||cls}</div></div></td>`;
+              }).join('')}</tr>`;
+            }).join('')}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderTeacherAnnouncements(){
+    document.getElementById('teacherContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">Announcements</h1>
+      <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+        ${['Staff Meeting — Friday 14th Feb, 12:00 PM in the Staff Room.','Second term examination timetable has been released. Please start invigilating preparation.','Report card submission deadline: April 10, 2025. All results must be entered by then.','Reminder: CA scores for all classes are due by end of March 20, 2025.'].map((t,i)=>`
+          <div class="card" style="border-left:4px solid var(--primary-color);padding:0;">
+            <div style="padding:var(--space-md) var(--space-lg);display:flex;gap:var(--space-md);">
+              <span style="font-size:22px;">📢</span>
+              <div><p style="font-size:13px;color:var(--text-primary);margin:0;line-height:1.6;">${t}</p></div>
+            </div>
+          </div>`).join('')}
+      </div>
+    `;
+  }
+
+  // Init
+  renderTeacherDash();
+</script>
+</body>
+</html>

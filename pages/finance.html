@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fees & Finance — Promise Academy</title>
+  <link rel="icon" type="image/jpeg" href="../assets/logo/logo1.jpg" />
+  <link rel="stylesheet" href="../css/style.css" /><link rel="stylesheet" href="../css/dashboard.css" /><link rel="stylesheet" href="../css/responsive.css" /><link rel="stylesheet" href="../css/print.css" />
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a href="../dashboard.html" class="sidebar-brand"><img src="../assets/logo/logo1.jpg" alt="Promise Academy" class="sidebar-logo" /><div class="sidebar-brand-text"><div class="sidebar-school-name">Promise Academy</div><div class="sidebar-tagline">School Management</div></div></a>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div><a href="../dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span></a>
+      <div class="sidebar-section-label">Academic</div><a href="students.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-label">Students</span></a><a href="admissions.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Admissions</span></a><a href="classes.html" class="nav-item"><span class="nav-icon">🏫</span><span class="nav-label">Classes &amp; Sections</span></a><a href="timetable.html" class="nav-item"><span class="nav-icon">🗓</span><span class="nav-label">Timetable</span></a>
+      <div class="sidebar-section-label">People</div><a href="staff.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-label">Teachers &amp; Staff</span></a><a href="parents.html" class="nav-item"><span class="nav-icon">👨‍👩‍👧</span><span class="nav-label">Parents</span></a>
+      <div class="sidebar-section-label">Operations</div><a href="attendance.html" class="nav-item"><span class="nav-icon">📅</span><span class="nav-label">Attendance</span></a><a href="finance.html" class="nav-item active"><span class="nav-icon">💰</span><span class="nav-label">Fees &amp; Finance</span></a><a href="payroll.html" class="nav-item"><span class="nav-icon">💵</span><span class="nav-label">Payroll</span></a>
+      <div class="sidebar-section-label">Results</div><a href="examinations.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-label">Examinations</span></a><a href="results.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-label">Results</span></a><a href="report-card.html" class="nav-item"><span class="nav-icon">📄</span><span class="nav-label">Report Cards</span></a><a href="broadsheet.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Broadsheet</span></a>
+      <div class="sidebar-section-label">System</div><a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-label">Notifications</span><span class="nav-badge">3</span></a><a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-label">Reports &amp; Analytics</span></a><a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span class="nav-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html" class="nav-item" style="color:rgba(255,255,255,0.5)"><span class="nav-icon">🚪</span><span class="nav-label">Logout</span></a></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="main-content" id="mainContent">
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" id="sidebarToggle">☰</button>
+      <div class="topbar-search"><div class="search-bar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="globalSearch" placeholder="Search…" /></div></div>
+      <div class="topbar-actions"><div class="role-badge"><span>🏫</span><span class="role-badge-text">Administrator</span></div><div style="position:relative;"><button class="topbar-btn" id="notifBtn">🔔<span class="topbar-notif-badge" id="notifBadge">3</span></button></div><button class="topbar-btn" id="themeToggle">🌙</button><div class="avatar-placeholder avatar-sm" style="background:var(--primary-color);color:white;font-weight:700;">OA</div><button class="topbar-toggle" id="mobileSidebarToggle" style="display:none;">☰</button></div>
+    </header>
+    <div class="content-wrapper">
+      <div class="page-header">
+        <div class="page-header-left"><div class="breadcrumb"><a href="../dashboard.html">🏠 Dashboard</a><span class="sep">›</span><span class="current">Fees &amp; Finance</span></div><h1 class="page-title">Fees &amp; Finance</h1><p class="page-subtitle">Manage school fees, payments, invoices and financial records</p></div>
+        <div class="page-header-right"><button class="btn btn-outline" onclick="openModal('feeStructureModal')">📋 Fee Structure</button><button class="btn btn-primary" onclick="openModal('paymentModal')">+ Record Payment</button></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-card green"><div class="stat-icon green">💰</div><div class="stat-content"><div class="stat-value" id="fin-expected" style="font-size:20px;">₦14.85M</div><div class="stat-label">Expected Fees</div></div></div>
+        <div class="stat-card green"><div class="stat-icon green">✅</div><div class="stat-content"><div class="stat-value" id="fin-collected" style="font-size:20px;">₦10.57M</div><div class="stat-label">Collected</div></div></div>
+        <div class="stat-card red"><div class="stat-icon red">⚠️</div><div class="stat-content"><div class="stat-value" id="fin-outstanding" style="font-size:20px;">₦4.28M</div><div class="stat-label">Outstanding</div></div></div>
+        <div class="stat-card gold"><div class="stat-icon gold">📅</div><div class="stat-content"><div class="stat-value" id="fin-today" style="font-size:20px;">₦480K</div><div class="stat-label">Today's Payments</div></div></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="card" style="margin-bottom:var(--space-xl);">
+        <div class="card-body" style="padding:var(--space-lg);">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:13px;color:var(--text-muted);">Second Term Collection Progress</span><strong id="fin-pct">71%</strong></div>
+          <div class="progress" style="height:12px;"><div class="progress-bar gold" id="finProgressBar" style="width:71%;"></div></div>
+        </div>
+      </div>
+
+      <!-- Fee Structure Cards -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-lg);margin-bottom:var(--space-xl);">
+        <div class="card"><div class="card-header"><span class="card-title">🧒 Nursery Fee Structure</span></div><div class="card-body" style="padding:var(--space-md);">
+          <table style="width:100%;font-size:13px;"><tbody>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Tuition</td><td style="text-align:right;font-weight:600;">₦85,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Registration</td><td style="text-align:right;font-weight:600;">₦15,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Examination</td><td style="text-align:right;font-weight:600;">₦5,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Books</td><td style="text-align:right;font-weight:600;">₦12,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Uniform</td><td style="text-align:right;font-weight:600;">₦8,500</td></tr>
+            <tr style="border-top:2px solid var(--border-color);"><td style="padding:8px 0;font-weight:700;color:var(--primary-color);">Total</td><td style="text-align:right;font-weight:700;font-size:15px;color:var(--primary-color);">₦125,500</td></tr>
+          </tbody></table>
+        </div></div>
+        <div class="card"><div class="card-header"><span class="card-title">📚 Primary Fee Structure</span></div><div class="card-body" style="padding:var(--space-md);">
+          <table style="width:100%;font-size:13px;"><tbody>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Tuition</td><td style="text-align:right;font-weight:600;">₦95,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Registration</td><td style="text-align:right;font-weight:600;">₦15,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Examination</td><td style="text-align:right;font-weight:600;">₦7,500</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Books</td><td style="text-align:right;font-weight:600;">₦14,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Uniform</td><td style="text-align:right;font-weight:600;">₦8,500</td></tr>
+            <tr style="border-top:2px solid var(--border-color);"><td style="padding:8px 0;font-weight:700;color:var(--primary-color);">Total</td><td style="text-align:right;font-weight:700;font-size:15px;color:var(--primary-color);">₦140,000</td></tr>
+          </tbody></table>
+        </div></div>
+        <div class="card"><div class="card-header"><span class="card-title">🏫 Secondary Fee Structure</span></div><div class="card-body" style="padding:var(--space-md);">
+          <table style="width:100%;font-size:13px;"><tbody>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Tuition</td><td style="text-align:right;font-weight:600;">₦120,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Registration</td><td style="text-align:right;font-weight:600;">₦20,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Examination</td><td style="text-align:right;font-weight:600;">₦10,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Books</td><td style="text-align:right;font-weight:600;">₦18,000</td></tr>
+            <tr><td style="padding:6px 0;color:var(--text-muted);">Uniform</td><td style="text-align:right;font-weight:600;">₦10,000</td></tr>
+            <tr style="border-top:2px solid var(--border-color);"><td style="padding:8px 0;font-weight:700;color:var(--primary-color);">Total</td><td style="text-align:right;font-weight:700;font-size:15px;color:var(--primary-color);">₦178,000</td></tr>
+          </tbody></table>
+        </div></div>
+      </div>
+
+      <!-- Payments Table -->
+      <div class="card">
+        <div class="card-header"><span class="card-title">💳 Payment Records</span></div>
+        <div class="filters-row">
+          <div class="search-bar" style="flex:1;max-width:300px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="searchPayments" placeholder="Search by student name…" /></div>
+          <select class="filter-select" id="filterPaySection"><option value="">All Sections</option><option value="nursery">Nursery</option><option value="primary">Primary</option><option value="secondary">Secondary</option></select>
+          <select class="filter-select" id="filterPayType"><option value="">All Fee Types</option><option value="tuition">Tuition</option><option value="registration">Registration</option><option value="examination">Examination</option><option value="books">Books</option></select>
+          <select class="filter-select" id="filterPayStatus"><option value="">All Status</option><option value="paid">Paid</option><option value="pending">Pending</option><option value="partial">Partial</option></select>
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead><tr><th>Payment ID</th><th>Student</th><th>Section</th><th>Class</th><th>Fee Type</th><th>Amount</th><th>Method</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="paymentsBody"></tbody>
+          </table>
+        </div>
+        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;color:var(--text-muted);">Showing all payment records</span><button class="btn btn-outline btn-sm" onclick="window.print()">🖨 Export / Print</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Record Payment Modal -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Record Fee Payment</h3><button class="modal-close" onclick="closeModal('paymentModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Student ID *</label><input class="form-control" type="text" id="payStudentId" placeholder="e.g. STU001" required /></div>
+      <div class="form-group"><label class="form-label">Fee Type *</label><select class="form-control" id="payFeeType" required><option value="">Select</option><option value="tuition">Tuition</option><option value="registration">Registration</option><option value="examination">Examination</option><option value="books">Books &amp; Stationery</option><option value="uniform">Uniform</option><option value="transportation">Transportation</option><option value="other">Other</option></select></div>
+      <div class="form-group"><label class="form-label">Amount (₦) *</label><input class="form-control" type="number" id="payAmount" placeholder="0.00" min="0" required /></div>
+      <div class="form-row cols-2">
+        <div class="form-group"><label class="form-label">Payment Method *</label><select class="form-control" id="payMethod" required><option value="">Select</option><option>Cash</option><option>Bank Transfer</option><option>Online Payment</option><option>POS</option><option>Cheque</option></select></div>
+        <div class="form-group"><label class="form-label">Date *</label><input class="form-control" type="date" id="payDate" required /></div>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" rows="2" placeholder="Optional payment note…"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('paymentModal')">Cancel</button><button class="btn btn-primary" onclick="recordPayment()">Record Payment</button></div>
+  </div>
+</div>
+
+<!-- Receipt Modal -->
+<div class="modal-overlay" id="receiptModal">
+  <div class="modal" style="max-width:480px;" id="receiptContent">
+    <div class="modal-header"><h3 class="modal-title">🧾 Payment Receipt</h3><button class="modal-close" onclick="closeModal('receiptModal')">✕</button></div>
+    <div class="modal-body" style="padding:0;">
+      <div style="padding:var(--space-xl);">
+        <!-- Receipt Header -->
+        <div style="display:flex;align-items:center;gap:var(--space-md);padding-bottom:var(--space-lg);border-bottom:2px solid var(--primary-color);margin-bottom:var(--space-lg);">
+          <img src="../assets/logo/logo1.jpg" style="width:55px;height:55px;object-fit:contain;background:white;padding:3px;border-radius:6px;" onerror="this.style.display='none'" />
+          <div><div style="font-size:16px;font-weight:700;color:var(--primary-color);">Promise Academy</div><div style="font-size:12px;color:var(--text-muted);">15 Education Avenue, Lekki Phase 1, Lagos</div><div style="font-size:12px;color:var(--text-muted);">+234 802 345 6789</div></div>
+        </div>
+        <div style="text-align:center;font-size:16px;font-weight:700;text-transform:uppercase;color:var(--secondary-color);border:2px solid var(--secondary-color);padding:8px;border-radius:6px;margin-bottom:var(--space-lg);letter-spacing:2px;">Official Receipt</div>
+        <div style="background:var(--surface-alt);border-radius:var(--radius-md);padding:var(--space-lg);margin-bottom:var(--space-lg);">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-muted);font-size:13px;">Receipt No.</span><strong id="rcptNo" style="color:var(--primary-color);"></strong></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-muted);font-size:13px;">Student Name</span><strong id="rcptStudent"></strong></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-muted);font-size:13px;">Student ID</span><span id="rcptStudentId"></span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-muted);font-size:13px;">Class</span><span id="rcptClass"></span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-muted);font-size:13px;">Fee Type</span><span id="rcptType"></span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-muted);font-size:13px;">Payment Method</span><span id="rcptMethod"></span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="color:var(--text-muted);font-size:13px;">Date</span><span id="rcptDate"></span></div>
+          <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border-color);"><span style="font-weight:700;">Amount Paid</span><strong style="font-size:18px;color:var(--success-color);" id="rcptAmount"></strong></div>
+        </div>
+        <div style="text-align:center;"><span class="badge badge-success badge-dot" id="rcptStatus">Paid</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-xl);margin-top:var(--space-2xl);">
+          <div style="text-align:center;"><div style="border-top:1px solid var(--border-color);padding-top:6px;margin-top:24px;font-size:11px;color:var(--text-muted);">Cashier's Signature</div></div>
+          <div style="text-align:center;"><div style="border-top:1px solid var(--border-color);padding-top:6px;margin-top:24px;font-size:11px;color:var(--text-muted);">Accountant's Signature</div></div>
+        </div>
+        <p style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:var(--space-lg);">This receipt is computer-generated and valid without a physical stamp.</p>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('receiptModal')">Close</button><button class="btn btn-primary" onclick="window.print()">🖨 Print Receipt</button></div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="../js/data.js"></script><script src="../js/app.js"></script><script src="../js/finance.js"></script>
+<script>
+  function checkMobile() { const mb = document.getElementById('mobileSidebarToggle'); if (mb) mb.style.display = window.innerWidth <= 1023 ? 'flex' : 'none'; }
+  window.addEventListener('resize', checkMobile); checkMobile();
+  document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>

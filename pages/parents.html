@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parents — Promise Academy</title>
+  <link rel="icon" type="image/jpeg" href="../assets/logo/logo1.jpg"/>
+  <link rel="stylesheet" href="../css/style.css"/><link rel="stylesheet" href="../css/dashboard.css"/><link rel="stylesheet" href="../css/responsive.css"/>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a href="../dashboard.html" class="sidebar-brand"><img src="../assets/logo/logo1.jpg" alt="Logo" class="sidebar-logo"/><div class="sidebar-brand-text"><div class="sidebar-school-name">Promise Academy</div><div class="sidebar-tagline">School Management</div></div></a>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div><a href="../dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span></a>
+      <div class="sidebar-section-label">Academic</div><a href="students.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-label">Students</span></a><a href="admissions.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Admissions</span></a><a href="classes.html" class="nav-item"><span class="nav-icon">🏫</span><span class="nav-label">Classes</span></a><a href="timetable.html" class="nav-item"><span class="nav-icon">🗓</span><span class="nav-label">Timetable</span></a>
+      <div class="sidebar-section-label">People</div><a href="staff.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-label">Staff</span></a><a href="parents.html" class="nav-item active"><span class="nav-icon">👨‍👩‍👧</span><span class="nav-label">Parents</span></a>
+      <div class="sidebar-section-label">Operations</div><a href="attendance.html" class="nav-item"><span class="nav-icon">📅</span><span class="nav-label">Attendance</span></a><a href="finance.html" class="nav-item"><span class="nav-icon">💰</span><span class="nav-label">Finance</span></a><a href="payroll.html" class="nav-item"><span class="nav-icon">💵</span><span class="nav-label">Payroll</span></a>
+      <div class="sidebar-section-label">Results</div><a href="examinations.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-label">Examinations</span></a><a href="results.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-label">Results</span></a><a href="report-card.html" class="nav-item"><span class="nav-icon">📄</span><span class="nav-label">Report Cards</span></a><a href="broadsheet.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label">Broadsheet</span></a>
+      <div class="sidebar-section-label">System</div><a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-label">Notifications</span></a><a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-label">Reports</span></a><a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span class="nav-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html" class="nav-item" style="color:rgba(255,255,255,0.5)"><span class="nav-icon">🚪</span><span class="nav-label">Logout</span></a></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="main-content" id="mainContent">
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" id="sidebarToggle">☰</button>
+      <div class="topbar-search"><div class="search-bar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="parSearch" placeholder="Search parents…" oninput="filterParents()" /></div></div>
+      <div class="topbar-actions"><button class="topbar-btn" id="themeToggle">🌙</button><div class="avatar-placeholder avatar-sm" style="background:var(--primary-color);color:white;font-weight:700;">OA</div><button class="topbar-toggle" id="mobileSidebarToggle" style="display:none;">☰</button></div>
+    </header>
+    <div class="content-wrapper">
+      <div class="page-header">
+        <div class="page-header-left"><div class="breadcrumb"><a href="../dashboard.html">🏠 Dashboard</a><span class="sep">›</span><span class="current">Parents</span></div><h1 class="page-title">Parents &amp; Guardians</h1><p class="page-subtitle">View and manage parent/guardian records</p></div>
+        <div class="page-header-right"><span id="parCount" style="font-size:13px;color:var(--text-muted);">14 parents</span></div>
+      </div>
+
+      <div class="card">
+        <div class="table-wrapper">
+          <table class="table">
+            <thead><tr><th>Parent/Guardian</th><th>Email</th><th>Phone</th><th>Children</th><th>Address</th><th>Actions</th></tr></thead>
+            <tbody id="parentsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+<script src="../js/data.js"></script><script src="../js/app.js"></script>
+<script>
+  function checkMobile(){const mb=document.getElementById('mobileSidebarToggle');if(mb)mb.style.display=window.innerWidth<=1023?'flex':'none';}
+  window.addEventListener('resize',checkMobile);checkMobile();
+
+  let parents = [...PA_DATA.parents];
+
+  function renderParents(list){
+    const body=document.getElementById('parentsBody');
+    body.innerHTML=list.map(p=>{
+      const children=p.children.map(cid=>{const s=getStudent(cid);return s?`<span class="badge badge-primary" style="margin:1px;">${s.name.split(' ')[0]}</span>`:''}).join('');
+      const initials=p.name.split(' ').filter(n=>n.length>1).map(n=>n[0]).join('').slice(0,2);
+      return `<tr>
+        <td>
+          <div class="student-cell">
+            <div class="avatar-placeholder avatar-sm" style="background:var(--secondary-ghost);color:var(--secondary-color);font-weight:700;font-size:11px;">${initials}</div>
+            <div><div style="font-weight:600;">${p.name}</div><div style="font-size:11px;color:var(--text-muted);">${p.id}</div></div>
+          </div>
+        </td>
+        <td style="font-size:13px;"><a href="mailto:${p.email}" style="color:var(--primary-color);">${p.email}</a></td>
+        <td style="font-size:13px;">${p.phone}</td>
+        <td>${children||'—'}</td>
+        <td style="font-size:12px;color:var(--text-muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.address}</td>
+        <td>
+          <div class="action-btns">
+            <button class="action-btn view" onclick="viewParent('${p.id}')" title="View">👁</button>
+            <button class="action-btn edit" title="Edit">✏️</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+    document.getElementById('parCount').textContent=list.length+' parent'+(list.length!==1?'s':'');
+  }
+
+  window.filterParents=function(){
+    const q=document.getElementById('parSearch').value.toLowerCase();
+    renderParents(q?parents.filter(p=>p.name.toLowerCase().includes(q)||p.email.toLowerCase().includes(q)):parents);
+  };
+
+  window.viewParent=function(id){
+    const p=PA_DATA.parents.find(x=>x.id===id);
+    if(!p) return;
+    const kids=p.children.map(cid=>{const s=getStudent(cid);return s?`${s.name} (${getClass(s.classId)?.name||s.classId})`:'Unknown'}).join(', ');
+    alert(`Parent: ${p.name}\nID: ${p.id}\nEmail: ${p.email}\nPhone: ${p.phone}\nAddress: ${p.address}\n\nChildren:\n${kids}`);
+  };
+
+  renderParents(parents);
+</script>
+</body>
+</html>

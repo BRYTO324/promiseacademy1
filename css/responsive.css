@@ -1,0 +1,445 @@
+/* ============================================================
+   PROMISE ACADEMY — RESPONSIVE STYLES
+   ============================================================ */
+
+/* ============================================================
+   LARGE DESKTOP (1400px+)
+   ============================================================ */
+@media (min-width: 1400px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .dashboard-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* ============================================================
+   DESKTOP (1200px - 1399px)
+   ============================================================ */
+@media (max-width: 1399px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ============================================================
+   TABLET LANDSCAPE (1024px - 1199px)
+   ============================================================ */
+@media (max-width: 1199px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-grid .span-2 {
+    grid-column: span 1;
+  }
+
+  .welcome-image {
+    width: 160px;
+    height: 110px;
+  }
+}
+
+/* ============================================================
+   TABLET PORTRAIT (768px - 1023px)
+   ============================================================ */
+@media (max-width: 1023px) {
+  /* Sidebar goes off-canvas on tablet */
+  .sidebar {
+    transform: translateX(-100%);
+    width: var(--sidebar-width) !important;
+    z-index: var(--z-sidebar);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+    width: var(--sidebar-width) !important;
+  }
+
+  .main-content,
+  .topbar {
+    margin-left: 0 !important;
+    left: 0 !important;
+  }
+
+  .topbar {
+    padding: 0 var(--space-md);
+  }
+
+  .topbar-search {
+    max-width: 280px;
+  }
+
+  .content-wrapper {
+    padding: var(--space-lg);
+  }
+
+  .dashboard-welcome {
+    padding: var(--space-xl);
+  }
+
+  .welcome-image-area {
+    display: none;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .stat-card { padding: var(--space-lg); }
+
+  .form-row.cols-3,
+  .form-row.cols-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .profile-banner {
+    padding: var(--space-lg) var(--space-xl);
+  }
+
+  .profile-avatar-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Hide role badge text on smaller screens */
+  .role-badge { display: none; }
+
+  .topbar-profile-info { display: none; }
+
+  /* Tables on tablet */
+  .table-responsive-tablet {
+    overflow-x: auto;
+  }
+}
+
+/* ============================================================
+   MOBILE (max 767px)
+   ============================================================ */
+@media (max-width: 767px) {
+  :root {
+    --sidebar-width: 280px;
+    --topbar-height: 56px;
+    --space-xl: 20px;
+    --space-2xl: 32px;
+  }
+
+  /* Mobile sidebar */
+  .sidebar {
+    transform: translateX(-100%);
+    width: var(--sidebar-width) !important;
+    z-index: var(--z-sidebar);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .main-content,
+  .topbar {
+    margin-left: 0 !important;
+    left: 0 !important;
+  }
+
+  .topbar {
+    padding: 0 var(--space-md);
+  }
+
+  .topbar-search {
+    display: none;
+  }
+
+  .topbar-search.mobile-search-open {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100%;
+    padding: 0 var(--space-md);
+    background: var(--topbar-bg);
+    z-index: 10;
+  }
+
+  .content-wrapper {
+    padding: var(--space-md);
+  }
+
+  /* Welcome banner — simplified on mobile */
+  .dashboard-welcome {
+    padding: var(--space-lg);
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .welcome-image-area {
+    display: none;
+  }
+
+  .welcome-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .welcome-meta {
+    gap: var(--space-md);
+  }
+
+  /* Stats — 2 columns on mobile */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
+  .stat-card {
+    padding: var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .stat-value {
+    font-size: var(--font-size-2xl);
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  /* Dashboard grid — single column */
+  .dashboard-grid,
+  .dashboard-grid.cols-3 {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .dashboard-grid .span-2 {
+    grid-column: span 1;
+  }
+
+  /* Page header — stack on mobile */
+  .page-header {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .page-header-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .page-title {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Forms — single column on mobile */
+  .form-row.cols-2,
+  .form-row.cols-3,
+  .form-row.cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Filters row — wrap and scroll */
+  .filters-row {
+    padding: var(--space-md);
+    gap: var(--space-xs);
+  }
+
+  .filters-row .search-bar {
+    width: 100%;
+    order: -1;
+  }
+
+  /* Section filter */
+  .section-filter {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 4px;
+  }
+
+  .section-btn {
+    padding: 7px 14px;
+    font-size: var(--font-size-xs);
+  }
+
+  /* Cards */
+  .card-body { padding: var(--space-md); }
+  .card-header { padding: var(--space-md); }
+
+  /* Tables — horizontal scroll */
+  .table-wrapper {
+    border-radius: var(--radius-md);
+  }
+
+  .table td, .table th {
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  /* Modals — fullscreen on mobile */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-width: 100%;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    max-height: 90vh;
+    margin-bottom: 0;
+  }
+
+  .modal-lg, .modal-xl {
+    max-width: 100%;
+  }
+
+  /* Profile banner — compact */
+  .profile-banner {
+    padding: var(--space-lg);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .profile-avatar-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .profile-name {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Pagination */
+  .pagination { flex-wrap: wrap; }
+
+  /* Tabs — scrollable */
+  .tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+
+  /* Toast — full width on mobile */
+  .toast-container {
+    left: var(--space-sm);
+    right: var(--space-sm);
+    top: 66px;
+  }
+  .toast {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Login page specifics */
+  .login-layout {
+    flex-direction: column !important;
+  }
+
+  .login-left {
+    min-height: 220px !important;
+    padding: var(--space-xl) !important;
+  }
+
+  .login-right {
+    padding: var(--space-xl) !important;
+  }
+
+  /* Action buttons */
+  .action-btns {
+    gap: 2px;
+  }
+
+  /* Topbar */
+  .topbar-btn span {
+    display: none;
+  }
+
+  .role-badge,
+  .topbar-profile-info {
+    display: none;
+  }
+
+  /* Charts */
+  .donut-chart {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Mobile touch targets */
+  .btn {
+    min-height: 40px;
+  }
+
+  .form-control {
+    min-height: 44px;
+  }
+
+  .nav-item {
+    padding: 12px var(--space-md);
+  }
+}
+
+/* ============================================================
+   SMALL MOBILE (max 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat-card {
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+    align-items: center;
+  }
+
+  .stat-change {
+    justify-content: center;
+  }
+
+  .welcome-title { font-size: var(--font-size-xl); }
+
+  .welcome-meta { flex-direction: column; gap: var(--space-sm); }
+
+  .btn-group-mobile {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-group-mobile .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   HOVER STATES (non-touch devices only)
+   ============================================================ */
+@media (hover: none) {
+  .stat-card:hover { transform: none; }
+  .card:hover { box-shadow: var(--shadow-sm); }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

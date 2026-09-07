@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Promise Academy</title>
+  <link rel="icon" type="image/jpeg" href="assets/logo/logo1.jpg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ═══ SIDEBAR ═══════════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <a href="dashboard.html" class="sidebar-brand">
+      <img src="assets/logo/logo1.jpg" alt="Promise Academy" class="sidebar-logo" />
+      <div class="sidebar-brand-text">
+        <div class="sidebar-school-name">Promise Academy</div>
+        <div class="sidebar-tagline">School Management</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+
+      <div class="sidebar-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item active">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+
+      <div class="sidebar-section-label">Academic</div>
+      <a href="pages/students.html" class="nav-item">
+        <span class="nav-icon">🎓</span>
+        <span class="nav-label">Students</span>
+      </a>
+      <a href="pages/admissions.html" class="nav-item">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">Admissions</span>
+        <span class="nav-badge">5</span>
+      </a>
+      <a href="pages/classes.html" class="nav-item">
+        <span class="nav-icon">🏫</span>
+        <span class="nav-label">Classes &amp; Sections</span>
+      </a>
+      <a href="pages/timetable.html" class="nav-item">
+        <span class="nav-icon">🗓</span>
+        <span class="nav-label">Timetable</span>
+      </a>
+
+      <div class="sidebar-section-label">People</div>
+      <a href="pages/staff.html" class="nav-item">
+        <span class="nav-icon">👥</span>
+        <span class="nav-label">Teachers &amp; Staff</span>
+      </a>
+      <a href="pages/parents.html" class="nav-item">
+        <span class="nav-icon">👨‍👩‍👧</span>
+        <span class="nav-label">Parents</span>
+      </a>
+
+      <div class="sidebar-section-label">Operations</div>
+      <a href="pages/attendance.html" class="nav-item">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Attendance</span>
+      </a>
+      <a href="pages/finance.html" class="nav-item">
+        <span class="nav-icon">💰</span>
+        <span class="nav-label">Fees &amp; Finance</span>
+      </a>
+      <a href="pages/payroll.html" class="nav-item">
+        <span class="nav-icon">💵</span>
+        <span class="nav-label">Payroll</span>
+      </a>
+
+      <div class="sidebar-section-label">Results</div>
+      <a href="pages/examinations.html" class="nav-item">
+        <span class="nav-icon">📝</span>
+        <span class="nav-label">Examinations</span>
+      </a>
+      <a href="pages/results.html" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Results</span>
+      </a>
+      <a href="pages/report-card.html" class="nav-item">
+        <span class="nav-icon">📄</span>
+        <span class="nav-label">Report Cards</span>
+      </a>
+      <a href="pages/broadsheet.html" class="nav-item">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">Broadsheet</span>
+      </a>
+
+      <div class="sidebar-section-label">System</div>
+      <a href="pages/notifications.html" class="nav-item">
+        <span class="nav-icon">🔔</span>
+        <span class="nav-label">Notifications</span>
+        <span class="nav-badge">3</span>
+      </a>
+      <a href="pages/reports.html" class="nav-item">
+        <span class="nav-icon">📈</span>
+        <span class="nav-label">Reports &amp; Analytics</span>
+      </a>
+      <a href="pages/settings.html" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" class="nav-item" style="color: rgba(255,255,255,0.5);">
+        <span class="nav-icon">🚪</span>
+        <span class="nav-label">Logout</span>
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- ═══ SIDEBAR OVERLAY (mobile) ══════════════════════════════ -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ═══ MAIN CONTENT ══════════════════════════════════════════ -->
+  <div class="main-content" id="mainContent">
+
+    <!-- ── TOPBAR ────────────────────────────────────────────── -->
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" id="sidebarToggle" title="Toggle Sidebar">☰</button>
+
+      <div class="topbar-search">
+        <div class="search-bar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="globalSearch" placeholder="Search students, staff, fees…" />
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="role-badge">
+          <span>🏫</span>
+          <span class="role-badge-text">Administrator</span>
+        </div>
+
+        <div style="position: relative;">
+          <button class="topbar-btn" id="notifBtn" title="Notifications">
+            🔔
+            <span class="topbar-notif-badge" id="notifBadge">3</span>
+          </button>
+        </div>
+
+        <button class="topbar-btn" id="themeToggle" title="Toggle Theme">🌙</button>
+
+        <div class="dropdown">
+          <div class="topbar-profile" data-dropdown="profileMenu">
+            <div class="avatar-placeholder avatar-sm" style="background: var(--primary-color); color: white; font-weight: 700;">OA</div>
+            <div class="topbar-profile-info">
+              <span class="topbar-profile-name">Mr. Olawale Adediran</span>
+              <span class="topbar-profile-role">School Administrator</span>
+            </div>
+            <span style="color: var(--text-muted); font-size: 12px; margin-left: 4px;">▾</span>
+          </div>
+          <div class="dropdown-menu" id="profileMenu">
+            <div class="dropdown-item">👤 My Profile</div>
+            <div class="dropdown-item">⚙️ Settings</div>
+            <div class="dropdown-divider"></div>
+            <a href="index.html" class="dropdown-item danger">🚪 Logout</a>
+          </div>
+        </div>
+
+        <button class="topbar-toggle" id="mobileSidebarToggle" style="display:none; background: var(--surface-alt);">☰</button>
+      </div>
+    </header>
+
+    <!-- ── CONTENT WRAPPER ───────────────────────────────────── -->
+    <div class="content-wrapper">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="breadcrumb">
+            <span>🏠</span>
+            <span class="sep">›</span>
+            <span class="current">Dashboard</span>
+          </div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle" id="currentDate">Loading…</p>
+        </div>
+        <div class="page-header-right">
+          <div class="section-filter" id="sectionFilter">
+            <button class="section-btn active" data-section="all">ALL</button>
+            <button class="section-btn" data-section="nursery">Nursery</button>
+            <button class="section-btn" data-section="primary">Primary</button>
+            <button class="section-btn" data-section="secondary">Secondary</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Welcome Banner -->
+      <div class="dashboard-welcome">
+        <div class="welcome-content">
+          <div class="welcome-greeting">Good morning, Administrator</div>
+          <h2 class="welcome-title">Promise Academy</h2>
+          <p class="welcome-subtitle" id="sectionBadge">All Sections · 2024/2025 Session · Second Term</p>
+          <div class="welcome-meta">
+            <span class="welcome-meta-item">🎓 <strong id="stat-total-inline">842</strong> Students</span>
+            <span class="welcome-meta-item">👥 <strong>48</strong> Staff</span>
+            <span class="welcome-meta-item">📅 Second Term</span>
+          </div>
+        </div>
+        <div class="welcome-image-area">
+          <img src="assets/images/img2.jpg" alt="Promise Academy" class="welcome-image"
+               onerror="this.src='assets/images/school2.png'; this.onerror=null;" />
+        </div>
+      </div>
+
+      <!-- ── SECTION LABEL ────────────────────────────────────── -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: var(--space-lg);">
+        <h3 style="font-size:var(--font-size-lg); font-weight:600; color:var(--text-secondary);">
+          Overview — <span id="currentSectionLabel" style="color:var(--primary-color)">All Sections</span>
+        </h3>
+        <a href="pages/reports.html" style="font-size:13px; color:var(--primary-color); font-weight:600;">
+          View Full Reports →
+        </a>
+      </div>
+
+      <!-- ── STATS GRID ─────────────────────────────────────── -->
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-icon green">🎓</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-total">842</div>
+            <div class="stat-label">Total Students</div>
+            <div class="stat-change up">↑ 12 this term</div>
+          </div>
+        </div>
+
+        <div class="stat-card teal">
+          <div class="stat-icon teal">🧒</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-nursery">164</div>
+            <div class="stat-label">Nursery Students</div>
+            <div class="stat-change up">↑ 4 new</div>
+          </div>
+        </div>
+
+        <div class="stat-card green">
+          <div class="stat-icon green">📚</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-primary">421</div>
+            <div class="stat-label">Primary Students</div>
+            <div class="stat-change up">↑ 6 new</div>
+          </div>
+        </div>
+
+        <div class="stat-card gold">
+          <div class="stat-icon gold">🏫</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-secondary">257</div>
+            <div class="stat-label">Secondary Students</div>
+            <div class="stat-change up">↑ 2 new</div>
+          </div>
+        </div>
+
+        <div class="stat-card blue">
+          <div class="stat-icon blue">👥</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-staff">48</div>
+            <div class="stat-label">Teachers &amp; Staff</div>
+            <div class="stat-change up">↑ 2 since Sept</div>
+          </div>
+        </div>
+
+        <div class="stat-card orange">
+          <div class="stat-icon orange">📋</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-pending">5</div>
+            <div class="stat-label">Pending Admissions</div>
+            <div class="stat-change down">3 require review</div>
+          </div>
+        </div>
+
+        <div class="stat-card red">
+          <div class="stat-icon red">💰</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-fees" style="font-size: 20px;">₦4.28M</div>
+            <div class="stat-label">Outstanding Fees</div>
+            <div class="stat-change down">↓ 47 families</div>
+          </div>
+        </div>
+
+        <div class="stat-card green">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-attendance">94.8%</div>
+            <div class="stat-label">Today's Attendance</div>
+            <div class="stat-change up">↑ 798 present</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DASHBOARD GRID ROW 1 ───────────────────────────── -->
+      <div class="dashboard-grid" style="grid-template-columns: 1fr 380px;">
+
+        <!-- Attendance Chart -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📊 Weekly Attendance Overview</span>
+            <div style="display:flex; gap: 8px;">
+              <select class="filter-select" style="font-size:12px;">
+                <option>This Week</option>
+                <option>Last Week</option>
+                <option>This Month</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="attendanceChart" class="chart-area" style="height: 200px; overflow: hidden;"></div>
+            <div class="chart-legend">
+              <div class="chart-legend-item">
+                <div class="chart-legend-dot" style="background: var(--primary-color);"></div>
+                Present
+              </div>
+              <div class="chart-legend-item">
+                <div class="chart-legend-dot" style="background: var(--danger-color);"></div>
+                Absent
+              </div>
+              <div class="chart-legend-item">
+                <div class="chart-legend-dot" style="background: var(--warning-color);"></div>
+                Late
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Breakdown -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🎯 Section Breakdown</span>
+          </div>
+          <div class="card-body">
+            <div id="sectionDonut" style="display:flex; align-items:center; gap: var(--space-lg);"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── DASHBOARD GRID ROW 2 ───────────────────────────── -->
+      <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+
+        <!-- Fee Collection Summary -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💰 Fee Collection — 2nd Term</span>
+            <a href="pages/finance.html" class="btn btn-outline btn-sm">View All</a>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-md); margin-bottom: var(--space-lg);">
+              <div style="text-align:center; padding: var(--space-md); background: var(--primary-ghost); border-radius: var(--radius-md);">
+                <div style="font-size: 18px; font-weight: 700; color: var(--primary-color);" id="fee-total">₦14.85M</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Expected</div>
+              </div>
+              <div style="text-align:center; padding: var(--space-md); background: var(--success-light); border-radius: var(--radius-md);">
+                <div style="font-size: 18px; font-weight: 700; color: var(--success-color);" id="fee-collected">₦10.57M</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Collected</div>
+              </div>
+              <div style="text-align:center; padding: var(--space-md); background: var(--danger-light); border-radius: var(--radius-md);">
+                <div style="font-size: 18px; font-weight: 700; color: var(--danger-color);" id="fee-outstanding">₦4.28M</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Outstanding</div>
+              </div>
+            </div>
+            <div style="margin-bottom: 8px; display:flex; justify-content:space-between; font-size:13px;">
+              <span style="color: var(--text-muted);">Collection progress</span>
+              <strong id="fee-pct">71%</strong>
+            </div>
+            <div class="progress">
+              <div class="progress-bar gold" id="feeProgressBar" style="width: 71%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">⚡ Recent Activity</span>
+            <a href="pages/notifications.html" class="btn btn-ghost btn-sm">View All</a>
+          </div>
+          <div class="card-body" style="padding: var(--space-md);">
+            <div id="activityFeed" class="activity-list"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── RECENT STUDENTS TABLE ──────────────────────────── -->
+      <div class="card" style="margin-bottom: var(--space-xl);">
+        <div class="card-header">
+          <span class="card-title">🎓 Recent Students</span>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <span style="font-size:12px; color:var(--text-muted);">Showing section: <strong id="tableSection">All</strong></span>
+            <a href="pages/students.html" class="btn btn-primary btn-sm">View All Students</a>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Gender</th>
+                <th>Section</th>
+                <th>Class</th>
+                <th>Parent/Guardian</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recentStudentsBody">
+              <tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted);">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── PENDING ADMISSIONS TABLE ──────────────────────── -->
+      <div class="card" style="margin-bottom: var(--space-xl);">
+        <div class="card-header">
+          <span class="card-title">📋 Pending Admissions</span>
+          <a href="pages/admissions.html" class="btn btn-secondary btn-sm">Manage Admissions</a>
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>App. ID</th>
+                <th>Applicant Name</th>
+                <th>Section</th>
+                <th>Class</th>
+                <th>Date Applied</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pendingAdmissionsBody">
+              <tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted);">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── QUICK LINKS ────────────────────────────────────── -->
+      <div class="card" style="margin-bottom: var(--space-xl);">
+        <div class="card-header">
+          <span class="card-title">⚡ Quick Actions</span>
+        </div>
+        <div class="card-body">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-md);">
+            <a href="pages/admissions.html" class="btn btn-outline" style="justify-content:center; flex-direction:column; padding: var(--space-lg); text-align:center; height:90px; gap:8px;">
+              <span style="font-size:26px;">📋</span>
+              <span>New Admission</span>
+            </a>
+            <a href="pages/students.html" class="btn btn-outline" style="justify-content:center; flex-direction:column; padding: var(--space-lg); text-align:center; height:90px; gap:8px;">
+              <span style="font-size:26px;">🎓</span>
+              <span>Add Student</span>
+            </a>
+            <a href="pages/attendance.html" class="btn btn-outline" style="justify-content:center; flex-direction:column; padding: var(--space-lg); text-align:center; height:90px; gap:8px;">
+              <span style="font-size:26px;">📅</span>
+              <span>Mark Attendance</span>
+            </a>
+            <a href="pages/finance.html" class="btn btn-outline" style="justify-content:center; flex-direction:column; padding: var(--space-lg); text-align:center; height:90px; gap:8px;">
+              <span style="font-size:26px;">💰</span>
+              <span>Record Payment</span>
+            </a>
+            <a href="pages/results.html" class="btn btn-outline" style="justify-content:center; flex-direction:column; padding: var(--space-lg); text-align:center; height:90px; gap:8px;">
+              <span style="font-size:26px;">📊</span>
+              <span>Enter Results</span>
+            </a>
+            <a href="pages/report-card.html" class="btn btn-outline" style="justify-content:center; flex-direction:column; padding: var(--space-lg); text-align:center; height:90px; gap:8px;">
+              <span style="font-size:26px;">📄</span>
+              <span>Print Report Card</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-wrapper -->
+  </div><!-- /main-content -->
+</div><!-- /app-shell -->
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
+<script>
+  // Show mobile toggle on small screens
+  function checkMobile() {
+    const mobileBtn = document.getElementById('mobileSidebarToggle');
+    if (mobileBtn) mobileBtn.style.display = window.innerWidth <= 1023 ? 'flex' : 'none';
+  }
+  window.addEventListener('resize', checkMobile);
+  checkMobile();
+</script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Portal — Promise Academy</title>
+  <link rel="icon" type="image/jpeg" href="../assets/logo/logo1.jpg"/>
+  <link rel="stylesheet" href="../css/style.css"/><link rel="stylesheet" href="../css/dashboard.css"/><link rel="stylesheet" href="../css/responsive.css"/>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a href="#" class="sidebar-brand">
+      <img src="../assets/logo/logo1.jpg" alt="Logo" class="sidebar-logo"/>
+      <div class="sidebar-brand-text"><div class="sidebar-school-name">Promise Academy</div><div class="sidebar-tagline">Student Portal</div></div>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Overview</div>
+      <a href="#" class="nav-item active" onclick="showStudView('dashboard',this)"><span class="nav-icon">🏠</span><span class="nav-label">My Dashboard</span></a>
+      <div class="sidebar-section-label">Academics</div>
+      <a href="#" class="nav-item" onclick="showStudView('results',this)"><span class="nav-icon">📊</span><span class="nav-label">My Results</span></a>
+      <a href="#" class="nav-item" onclick="showStudView('attendance',this)"><span class="nav-icon">📅</span><span class="nav-label">My Attendance</span></a>
+      <a href="#" class="nav-item" onclick="showStudView('timetable',this)"><span class="nav-icon">🗓</span><span class="nav-label">Class Timetable</span></a>
+      <a href="#" class="nav-item" onclick="showStudView('fees',this)"><span class="nav-icon">💰</span><span class="nav-label">Fee Status</span></a>
+      <div class="sidebar-section-label">Info</div>
+      <a href="#" class="nav-item" onclick="showStudView('profile',this)"><span class="nav-icon">👤</span><span class="nav-label">My Profile</span></a>
+      <a href="#" class="nav-item" onclick="showStudView('announcements',this)"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html" class="nav-item" style="color:rgba(255,255,255,0.5)"><span class="nav-icon">🚪</span><span class="nav-label">Logout</span></a></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="main-content" id="mainContent">
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" id="sidebarToggle">☰</button>
+      <div style="flex:1;"></div>
+      <div class="topbar-actions">
+        <div class="role-badge"><span>🎒</span><span class="role-badge-text">Student</span></div>
+        <button class="topbar-btn" id="themeToggle">🌙</button>
+        <div class="avatar-placeholder avatar-sm" id="studAvatar" style="background:var(--primary-color);color:white;font-weight:700;">AO</div>
+        <button class="topbar-toggle" id="mobileSidebarToggle" style="display:none;">☰</button>
+      </div>
+    </header>
+    <div class="content-wrapper" id="studentContent"></div>
+  </div>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+<script src="../js/data.js"></script><script src="../js/app.js"></script>
+<script>
+  function checkMobile(){const mb=document.getElementById('mobileSidebarToggle');if(mb)mb.style.display=window.innerWidth<=1023?'flex':'none';}
+  window.addEventListener('resize',checkMobile);checkMobile();
+
+  // Demo student
+  const STUDENT = PA_DATA.students[0]; // Adaeze Okonkwo
+  const CLS = getClass(STUDENT.classId);
+  const PARENT = getParent(STUDENT.parentId);
+  const initials=STUDENT.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+  document.getElementById('studAvatar').textContent=initials;
+
+  function showStudView(view, el){
+    document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+    if(el) el.classList.add('active');
+    const map={dashboard:renderStudDash,results:renderStudResults,attendance:renderStudAttendance,timetable:renderStudTimetable,fees:renderStudFees,profile:renderStudProfile,announcements:renderStudAnnouncements};
+    if(map[view]) map[view]();
+  }
+
+  function renderStudDash(){
+    const resultData = PA_DATA.results[STUDENT.id];
+    document.getElementById('studentContent').innerHTML=`
+      <div class="page-header">
+        <div class="page-header-left"><h1 class="page-title">Student Dashboard</h1><p class="page-subtitle">${PA_DATA.school.session} · ${PA_DATA.school.term}</p></div>
+      </div>
+
+      <div class="dashboard-welcome" style="margin-bottom:var(--space-xl);">
+        <div class="welcome-content">
+          <div class="welcome-greeting">Good day,</div>
+          <h2 class="welcome-title">${STUDENT.name}</h2>
+          <p class="welcome-subtitle">${CLS?CLS.name:''} · ${getSectionName(STUDENT.section)} Section</p>
+          <div class="welcome-meta">
+            <span class="welcome-meta-item">🪪 ${STUDENT.id}</span>
+            <span class="welcome-meta-item">📋 ${STUDENT.admissionNo}</span>
+          </div>
+        </div>
+        <div style="position:relative;z-index:1;">
+          <div class="avatar-placeholder" style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.15);color:white;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,0.3);">${initials}</div>
+        </div>
+      </div>
+
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:var(--space-xl);">
+        <div class="stat-card gold"><div class="stat-icon gold" style="width:40px;height:40px;">📊</div><div class="stat-content"><div class="stat-value">${resultData?resultData.average+'%':'—'}</div><div class="stat-label">Term Average</div></div></div>
+        <div class="stat-card green"><div class="stat-icon green" style="width:40px;height:40px;">🏆</div><div class="stat-content"><div class="stat-value">${resultData?resultData.position:''}/38</div><div class="stat-label">Class Position</div></div></div>
+        <div class="stat-card green"><div class="stat-icon green" style="width:40px;height:40px;">📅</div><div class="stat-content"><div class="stat-value">94%</div><div class="stat-label">Attendance</div></div></div>
+        <div class="stat-card blue"><div class="stat-icon blue" style="width:40px;height:40px;">📚</div><div class="stat-content"><div class="stat-value">${STUDENT.section==='secondary'?8:6}</div><div class="stat-label">Subjects</div></div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-xl);">
+        <!-- Top subjects -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">📊 Subject Performance</span></div>
+          <div class="card-body">
+            ${resultData?resultData.subjects.slice(0,5).map(s=>`
+              <div style="margin-bottom:var(--space-md);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span style="font-weight:500;">${s.name}</span><strong style="color:${s.total>=75?'var(--success-color)':s.total<45?'var(--danger-color)':'var(--warning-color)'};">${s.total} (${s.grade})</strong></div>
+                <div style="height:6px;background:var(--border-light);border-radius:3px;"><div style="width:${s.total}%;height:100%;background:${s.total>=75?'var(--success-color)':s.total<45?'var(--danger-color)':'var(--warning-color)'};border-radius:3px;"></div></div>
+              </div>`).join(''):`<div class="empty-state" style="padding:30px;"><div style="font-size:30px;">📊</div><p style="color:var(--text-muted);font-size:13px;margin-top:8px;">No results yet</p></div>`}
+          </div>
+        </div>
+        <!-- Quick actions -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">⚡ Quick Links</span></div>
+          <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm);">
+            <button class="btn btn-outline" onclick="showStudView('results')" style="justify-content:flex-start;gap:8px;">📊 My Results</button>
+            <button class="btn btn-outline" onclick="showStudView('attendance')" style="justify-content:flex-start;gap:8px;">📅 Attendance</button>
+            <button class="btn btn-outline" onclick="showStudView('timetable')" style="justify-content:flex-start;gap:8px;">🗓 Timetable</button>
+            <button class="btn btn-outline" onclick="showStudView('fees')" style="justify-content:flex-start;gap:8px;">💰 Fee Status</button>
+            <a href="../pages/report-card.html?student=${STUDENT.id}" class="btn btn-primary" style="grid-column:span 2;justify-content:center;">📄 Print Report Card</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderStudResults(){
+    const resultData=PA_DATA.results[STUDENT.id];
+    document.getElementById('studentContent').innerHTML=`
+      <div class="page-header"><div class="page-header-left"><h1 class="page-title">My Results</h1></div><div class="page-header-right"><a href="../pages/report-card.html?student=${STUDENT.id}" class="btn btn-primary">🖨 Print Report Card</a></div></div>
+      ${!resultData?`<div class="card"><div class="empty-state" style="padding:60px;"><div class="empty-state-icon">📊</div><div class="empty-state-title">Results Not Published</div></div></div>`:`
+      <div class="card">
+        <div class="card-header"><span class="card-title">${resultData.term} — ${resultData.session}</span>
+          <div style="display:flex;gap:16px;font-size:13px;">
+            <span>Average: <strong style="color:var(--primary-color);">${resultData.average}%</strong></span>
+            <span>Position: <strong style="color:var(--secondary-color);">${resultData.position} of ${resultData.totalStudents}</strong></span>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead><tr><th>Subject</th><th style="text-align:center;">CA</th><th style="text-align:center;">Exam</th><th style="text-align:center;">Total</th><th style="text-align:center;">Grade</th><th>Remark</th></tr></thead>
+            <tbody>${resultData.subjects.map(s=>`
+              <tr>
+                <td><strong>${s.name}</strong></td>
+                <td style="text-align:center;">${s.ca}</td>
+                <td style="text-align:center;">${s.exam}</td>
+                <td style="text-align:center;font-weight:700;color:${s.total>=75?'var(--success-color)':s.total<45?'var(--danger-color)':'var(--warning-color)'};">${s.total}</td>
+                <td style="text-align:center;font-weight:700;color:var(--primary-color);">${s.grade}</td>
+                <td style="font-size:12px;">${s.remark}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <div style="font-size:13px;font-style:italic;color:var(--text-secondary);">"${resultData.teacherRemark}"</div>
+        </div>
+      </div>`}
+    `;
+  }
+
+  function renderStudAttendance(){
+    document.getElementById('studentContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">My Attendance</h1>
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:var(--space-xl);">
+        <div class="stat-card green"><div class="stat-icon green" style="width:40px;height:40px;">✅</div><div class="stat-content"><div class="stat-value">52</div><div class="stat-label">Days Present</div></div></div>
+        <div class="stat-card red"><div class="stat-icon red" style="width:40px;height:40px;">❌</div><div class="stat-content"><div class="stat-value">3</div><div class="stat-label">Days Absent</div></div></div>
+        <div class="stat-card orange"><div class="stat-icon orange" style="width:40px;height:40px;">⏰</div><div class="stat-content"><div class="stat-value">0</div><div class="stat-label">Late Arrivals</div></div></div>
+        <div class="stat-card green"><div class="stat-icon green" style="width:40px;height:40px;">📊</div><div class="stat-content"><div class="stat-value">94.5%</div><div class="stat-label">Rate</div></div></div>
+      </div>
+      <div class="card"><div class="card-header"><span class="card-title">📅 Attendance Record</span></div>
+        <div class="card-body">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:4px;" id="studCal"></div>
+          <div style="display:flex;gap:16px;margin-top:16px;font-size:12px;">
+            <span><span style="display:inline-block;width:12px;height:12px;background:var(--success-color);border-radius:2px;margin-right:4px;vertical-align:middle;"></span>Present</span>
+            <span><span style="display:inline-block;width:12px;height:12px;background:var(--danger-color);border-radius:2px;margin-right:4px;vertical-align:middle;"></span>Absent</span>
+          </div>
+        </div>
+      </div>
+    `;
+    const g=document.getElementById('studCal');
+    for(let i=1;i<=55;i++){const r=Math.random();const c=r>0.05?'var(--success-color)':'var(--danger-color)';g.innerHTML+=`<div style="height:28px;background:${c};border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;">${i}</div>`;}
+  }
+
+  function renderStudTimetable(){
+    const subjects=STUDENT.section==='nursery'?PA_DATA.subjects.nursery:STUDENT.section==='primary'?PA_DATA.subjects.primary:PA_DATA.subjects.secondary_jss;
+    const days=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+    const periods=['7:30–8:15','8:15–9:00','9:00–9:45','9:45–10:30','BREAK','11:00–11:45','11:45–12:30'];
+    const colors=['#e8f5e8','#e3f2fd','#fff8e1','#fce4ec','#f3e5f5','#e0f2f1'];
+    document.getElementById('studentContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">Class Timetable — ${CLS?CLS.name:''}</h1>
+      <div class="card"><div class="table-wrapper"><table class="table" style="min-width:600px;">
+        <thead><tr><th>Period</th>${days.map(d=>`<th style="text-align:center;">${d}</th>`).join('')}</tr></thead>
+        <tbody>${periods.map((p,pi)=>{
+          if(p==='BREAK') return `<tr><td style="font-size:11px;font-weight:700;color:var(--text-muted);">${p}</td><td colspan="5" style="text-align:center;font-weight:700;color:var(--warning-color);">☕ BREAK TIME</td></tr>`;
+          const seed=STUDENT.classId.charCodeAt(0);
+          return `<tr><td style="font-size:11px;font-weight:700;color:var(--text-muted);white-space:nowrap;">${p}</td>${days.map((_,di)=>{
+            const idx=(seed*7+di*3+pi*2)%subjects.length;
+            const ci=idx%colors.length;
+            return `<td><div style="background:${colors[ci]};padding:5px 6px;border-radius:4px;text-align:center;font-size:12px;">${subjects[idx]}</div></td>`;
+          }).join('')}</tr>`;
+        }).join('')}</tbody>
+      </table></div></div>
+    `;
+  }
+
+  function renderStudFees(){
+    const payment=PA_DATA.payments.find(p=>p.studentId===STUDENT.id);
+    const feeData=PA_DATA.feeStructure[STUDENT.section];
+    document.getElementById('studentContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">Fee Status</h1>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-xl);">
+        <div class="card"><div class="card-header"><span class="card-title">💰 Fee Breakdown</span></div><div class="card-body">
+          <table style="width:100%;font-size:13px;"><tbody>
+            <tr><td style="padding:8px 0;color:var(--text-muted);">Tuition</td><td style="text-align:right;font-weight:600;">₦${feeData.tuition.toLocaleString()}</td></tr>
+            <tr><td style="padding:8px 0;color:var(--text-muted);">Examination</td><td style="text-align:right;font-weight:600;">₦${feeData.examination.toLocaleString()}</td></tr>
+            <tr><td style="padding:8px 0;color:var(--text-muted);">Books</td><td style="text-align:right;font-weight:600;">₦${feeData.books.toLocaleString()}</td></tr>
+            <tr style="border-top:2px solid var(--border-color);"><td style="padding:10px 0;font-weight:700;color:var(--primary-color);">Total</td><td style="text-align:right;font-weight:700;font-size:15px;color:var(--primary-color);">₦${feeData.total.toLocaleString()}</td></tr>
+          </tbody></table>
+        </div></div>
+        <div class="card"><div class="card-header"><span class="card-title">📋 Payment Status</span></div><div class="card-body" style="text-align:center;padding:var(--space-2xl);">
+          <div style="font-size:56px;margin-bottom:16px;">${payment?.status==='paid'?'✅':'⏳'}</div>
+          <span class="badge badge-dot ${payment?.status==='paid'?'badge-success':'badge-warning'}" style="font-size:14px;padding:8px 20px;">${payment?.status==='paid'?'Fees Paid':'Payment Pending'}</span>
+          ${payment?.status==='paid'?`<div style="margin-top:16px;font-size:13px;color:var(--text-muted);">Paid ${formatDate(payment.date)} · ${payment.method}<br/>Receipt: ${payment.receiptNo}</div>`:''}
+        </div></div>
+      </div>
+    `;
+  }
+
+  function renderStudProfile(){
+    document.getElementById('studentContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">My Profile</h1>
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex;align-items:center;gap:var(--space-xl);padding:var(--space-xl);background:var(--primary-ghost);border-radius:var(--radius-lg);margin-bottom:var(--space-xl);">
+            <div class="avatar-placeholder avatar-3xl" style="background:var(--primary-color);color:white;font-size:40px;font-weight:700;">${initials}</div>
+            <div>
+              <div style="font-size:24px;font-weight:700;">${STUDENT.name}</div>
+              <div style="font-size:14px;color:var(--text-muted);margin-top:4px;">${CLS?CLS.name:''} · ${getSectionName(STUDENT.section)}</div>
+              <span class="badge badge-success badge-dot" style="margin-top:8px;">Active Student</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-xl);">
+            ${[['Student ID',STUDENT.id],['Admission No.',STUDENT.admissionNo],['Date of Birth',formatDate(STUDENT.dob)],['Gender',STUDENT.gender],['Section',getSectionName(STUDENT.section)],['Class',CLS?CLS.name:STUDENT.classId],['Admission Date',formatDate(STUDENT.admissionDate)],['Parent/Guardian',PARENT?PARENT.name:'—'],['Parent Phone',PARENT?PARENT.phone:'—']].map(([l,v])=>`
+              <div style="padding:var(--space-md);background:var(--surface-alt);border-radius:var(--radius-md);border:1px solid var(--border-light);">
+                <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;margin-bottom:4px;">${l}</div>
+                <div style="font-weight:600;font-size:14px;">${v||'—'}</div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderStudAnnouncements(){
+    document.getElementById('studentContent').innerHTML=`
+      <h1 class="page-title" style="margin-bottom:var(--space-xl);">Announcements</h1>
+      <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+        ${['Second term examination timetable has been released. Check with your class teacher.','Annual Sports Day is on Friday 28th March 2025. Wear your house colours.','Reminder: Second term fees are due by March 20, 2025.','The school library will be open on Saturdays from 9 AM – 12 PM.'].map(t=>`
+          <div class="card" style="border-left:4px solid var(--primary-color);padding:0;">
+            <div style="padding:var(--space-md) var(--space-lg);display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">📢</span>
+              <p style="font-size:13px;color:var(--text-primary);line-height:1.6;margin:0;">${t}</p>
+            </div>
+          </div>`).join('')}
+      </div>
+    `;
+  }
+
+  renderStudDash();
+</script>
+</body>
+</html>
